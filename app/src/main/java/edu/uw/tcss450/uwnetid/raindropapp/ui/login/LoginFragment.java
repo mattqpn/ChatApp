@@ -21,14 +21,17 @@ import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentLoginBinding;
 /**
  * Fragment for the Login action
  */
-public class LoginFragment extends Fragment {
-    public LoginFragment() {
+public class LoginFragment extends Fragment
+{
+    public LoginFragment()
+    {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
@@ -42,7 +45,8 @@ public class LoginFragment extends Fragment {
         FragmentLoginBinding binding = FragmentLoginBinding.bind(requireView());
 
         //On button click, navigate to MainActivity
-        binding.loginButton.setOnClickListener(button -> {
+        binding.loginButton.setOnClickListener(button ->
+        {
             Navigation.findNavController(requireView()).navigate(
                     LoginFragmentDirections
                             .actionLoginFragmentToMainActivity(
@@ -62,9 +66,11 @@ public class LoginFragment extends Fragment {
      * @param email the email used to encode into the JWT
      * @return the resulting JWT
      */
-    private String generateJwt(final String email) {
+    private String generateJwt(final String email)
+    {
         String token;
-        try {
+        try
+        {
             Algorithm algorithm = Algorithm.HMAC256("secret key don't use a string literal in " +
                     "production code!!!");
             token = JWT.create()
@@ -72,7 +78,8 @@ public class LoginFragment extends Fragment {
                     .withClaim("email", email)
                     .sign(algorithm);
         }
-        catch (JWTCreationException exception) {
+        catch (JWTCreationException exception)
+        {
             throw new RuntimeException("JWT Failed to Create.");
         }
         return token;

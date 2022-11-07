@@ -12,7 +12,7 @@
     <string name="title_weather">Weather</string>
     <string name="title_chat">Chat</string>
 
-    <string name="label_home">Welcome Home %1$s!</string>
+    <string name="label_home">This is the Home page</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="text_blank">Blank text</string>

@@ -3,9 +3,11 @@ package edu.uw.tcss450.uwnetid.raindropapp.model;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.auth0.android.jwt.JWT;
 
-public class UserInfoViewModel extends ViewModel {
+public class UserInfoViewModel extends androidx.lifecycle.ViewModel
+{
     private final JWT mJwt;
 
     private UserInfoViewModel(JWT jwt)
@@ -33,11 +35,14 @@ public class UserInfoViewModel extends ViewModel {
      * @throws IllegalStateException when the JWT stored in thsi ViewModel is expired (Will not
      *      happen in this lab)
      */
-    public String getEmail() {
-        if (!mJwt.isExpired(0)) {
+    public String getEmail()
+    {
+        if (!mJwt.isExpired(0))
+        {
             return mJwt.getClaim("email").asString();
         }
-        else {
+        else
+        {
             throw new IllegalStateException("JWT is expired!");
         }
     }
@@ -52,8 +57,10 @@ public class UserInfoViewModel extends ViewModel {
 
         @NonNull
         @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (UserInfoViewModel.class == modelClass) {
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass)
+        {
+            if (UserInfoViewModel.class == modelClass)
+            {
                 return (T) new UserInfoViewModel(jwt);
             }
             throw new IllegalArgumentException(
