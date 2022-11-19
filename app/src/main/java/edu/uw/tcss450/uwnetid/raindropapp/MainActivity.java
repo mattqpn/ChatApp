@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -74,9 +75,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        Intent mIntent = new Intent(this, LoginActivity.class);
+
+        if (id == R.id.action_settings)
+        {
             //TODO open a settings fragment
             Log.d("SETTINGS", "Clicked");
+            return true;
+        }
+
+        if (id == R.id.action_logout)
+        {
+            Log.d("LOGOUT", "Clicked");
+            startActivity(mIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);
