@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.home.HomeFragment"
-        android:label="fragment_home"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_weather"

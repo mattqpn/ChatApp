@@ -1,4 +1,4 @@
-package edu.uw.tcss450.uwnetid.raindropapp.ui.login;
+package edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login;
 
 import static edu.uw.tcss450.uwnetid.raindropapp.utils.PasswordValidator.*;
 
@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentLoginBinding;
+import edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login.LoginFragmentArgs;
+import edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login.LoginFragmentDirections;
 import edu.uw.tcss450.uwnetid.raindropapp.utils.PasswordValidator;
 
 /**

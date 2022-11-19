@@ -1,4 +1,4 @@
-package edu.uw.tcss450.uwnetid.raindropapp.ui.register;
+package edu.uw.tcss450.uwnetid.raindropapp.ui.auth.register;
 
 import android.app.Application;
 import android.util.Base64;

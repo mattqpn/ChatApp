@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.login.LoginFragment"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -38,7 +38,7 @@
     </activity>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.register.RegisterFragment"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.auth.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
