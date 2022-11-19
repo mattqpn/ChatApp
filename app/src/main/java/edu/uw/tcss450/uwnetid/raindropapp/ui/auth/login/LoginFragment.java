@@ -22,6 +22,8 @@ import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentLoginBinding;
 import edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login.LoginFragmentArgs;
 import edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login.LoginFragmentDirections;
 import edu.uw.tcss450.uwnetid.raindropapp.utils.PasswordValidator;
+import edu.uw.tcss450.uwnetid.raindropapp.model.PushyTokenViewModel;
+import edu.uw.tcss450.uwnetid.raindropapp.model.UserInfoViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +40,9 @@ public class LoginFragment extends Fragment {
     private PasswordValidator mPassWordValidator = checkPwdLength(1)
             .and(checkExcludeWhiteSpace());
 
+    private PushyTokenViewModel mPushyTokenViewModel;
+    private UserInfoViewModel mUserViewModel;
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -47,6 +52,8 @@ public class LoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mLoginModel = new ViewModelProvider(getActivity())
                 .get(LoginViewModel.class);
+        mPushyTokenViewModel = new ViewModelProvider(getActivity())
+                .get(PushyTokenViewModel.class);
     }
 
     @Override
@@ -75,6 +82,14 @@ public class LoginFragment extends Fragment {
         LoginFragmentArgs args = LoginFragmentArgs.fromBundle(getArguments());
         binding.editEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
         binding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
+
+        //don't allow sign in until pushy token retrieved
+        mPushyTokenViewModel.addTokenObserver(getViewLifecycleOwner(), token ->
+                binding.buttonLogIn.setEnabled(!token.isEmpty()));
+
+        mPushyTokenViewModel.addResponseObserver(
+                getViewLifecycleOwner(),
+                this::observePushyPutResponse);
     }
 
     private void attemptLogin(final View button) {
@@ -132,16 +147,46 @@ public class LoginFragment extends Fragment {
                 }
             } else {
                 try {
-                    navigateToSuccess(
-                            binding.editEmail.getText().toString(),
-                            response.getString("token")
-                    );
+                    mUserViewModel = new ViewModelProvider(getActivity(),
+                            new UserInfoViewModel.UserInfoViewModelFactory(
+                                    binding.editEmail.getText().toString(),
+                                    response.getString("token")
+                            )).get(UserInfoViewModel.class);
+                    sendPushyToken();
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             }
         } else {
             Log.d("JSON Response", "No Response");
+        }
+    }
+
+    /**
+     * Helper to abstract the request to send the pushy token to the web service
+     */
+    private void sendPushyToken() {
+        mPushyTokenViewModel.sendTokenToWebservice(mUserViewModel.getmJwt());
+    }
+
+    /**
+     * An observer on the HTTP Response from the web server. This observer should be
+     * attached to PushyTokenViewModel.
+     *
+     * @param response the Response from the server
+     */
+    private void observePushyPutResponse(final JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code")) {
+                //this error cannot be fixed by the user changing credentials...
+                binding.editEmail.setError(
+                        "Error Authenticating on Push Token. Please contact support");
+            } else {
+                navigateToSuccess(
+                        binding.editEmail.getText().toString(),
+                        mUserViewModel.getmJwt()
+                );
+            }
         }
     }
 }
