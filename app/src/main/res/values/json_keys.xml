@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keys_json_contact_response">response</string>
+    <string name="keys_json_contact_data">data</string>
+    <string name="keys_json_contact_username">username</string>
+</resources>
