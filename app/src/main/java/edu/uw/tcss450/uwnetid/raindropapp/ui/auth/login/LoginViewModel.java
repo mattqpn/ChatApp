@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.io.RequestQueueSingleton;
 
 public class LoginViewModel extends AndroidViewModel {
@@ -40,14 +41,18 @@ public class LoginViewModel extends AndroidViewModel {
         mResponse.observe(owner, observer);
     }
 
+
     public void connect(final String email, final String password) {
-        String url = "https://team-6-tcss-450.herokuapp.com/auth";
+        String url = getApplication().getResources().getString(R.string.base_url_auth) +
+                "auth";
+
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
                 mResponse::setValue,
                 this::handleError) {
+
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -60,6 +65,7 @@ public class LoginViewModel extends AndroidViewModel {
                 return headers;
             }
         };
+
         request.setRetryPolicy(new DefaultRetryPolicy(
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -67,8 +73,9 @@ public class LoginViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
-    }
 
+        //code here will run
+    }
 
 
     private void handleError(final VolleyError error) {
@@ -82,13 +89,12 @@ public class LoginViewModel extends AndroidViewModel {
             }
         }
         else {
-            String data = new String(error.networkResponse.data, Charset.defaultCharset())
-                    .replace('\"', '\'');
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
             try {
-                JSONObject response = new JSONObject();
-                response.put("code", error.networkResponse.statusCode);
-                response.put("data", new JSONObject(data));
-                mResponse.setValue(response);
+                mResponse.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
             } catch (JSONException e) {
                 Log.e("JSON PARSE", "JSON Parse Error in handleError");
             }
