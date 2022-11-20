@@ -19,8 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentLoginBinding;
-import edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login.LoginFragmentArgs;
-import edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login.LoginFragmentDirections;
 import edu.uw.tcss450.uwnetid.raindropapp.utils.PasswordValidator;
 import edu.uw.tcss450.uwnetid.raindropapp.model.PushyTokenViewModel;
 import edu.uw.tcss450.uwnetid.raindropapp.model.UserInfoViewModel;
@@ -79,9 +77,12 @@ public class LoginFragment extends Fragment {
                 getViewLifecycleOwner(),
                 this::observeResponse);
 
+
+
         LoginFragmentArgs args = LoginFragmentArgs.fromBundle(getArguments());
-        binding.editEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
-        binding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
+        //TODO: Remove hard-coded email and password
+        binding.editEmail.setText(args.getEmail().equals("default") ? "cfb3@uw.edu" : args.getEmail());
+        binding.editPassword.setText(args.getPassword().equals("default") ? "Ads1234#" : args.getPassword());
 
         //don't allow sign in until pushy token retrieved
         mPushyTokenViewModel.addTokenObserver(getViewLifecycleOwner(), token ->
@@ -160,6 +161,7 @@ public class LoginFragment extends Fragment {
         } else {
             Log.d("JSON Response", "No Response");
         }
+
     }
 
     /**
