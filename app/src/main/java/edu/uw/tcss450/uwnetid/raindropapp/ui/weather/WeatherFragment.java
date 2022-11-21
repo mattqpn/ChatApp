@@ -5,6 +5,7 @@ import android.icu.text.DecimalFormat;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -35,8 +36,8 @@ import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentWeatherBinding;
 public class WeatherFragment extends Fragment
 {
     private FragmentWeatherBinding binding;
-    EditText currentCity, currentCountry;
-    TextView weatherResult;
+    private EditText currentCity, currentCountry;
+    private TextView weatherResult;
     private final String url = "https://api.weatherbit.io/v2.0/current";
     private final String appID = "0721a87721a04175806802e3e8688271";
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -45,9 +46,9 @@ public class WeatherFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        currentCity = currentCity.findViewById(R.id.currentCity);
-        currentCountry = currentCountry.findViewById(R.id.currentCountry);
-        weatherResult = weatherResult.findViewById(R.id.weatherResult);
+        currentCity = getActivity().findViewById(R.id.current_city);
+        currentCountry = getActivity().findViewById(R.id.current_country);
+        weatherResult = getActivity().findViewById(R.id.weather_result);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class WeatherFragment extends Fragment
         binding = FragmentWeatherBinding.inflate(inflater);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+        return binding.getRoot();
     }
 
     public void getCurrentWeather(View view)

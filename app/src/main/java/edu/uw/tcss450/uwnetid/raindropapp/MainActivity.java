@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.auth0.android.jwt.JWT;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
