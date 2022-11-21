@@ -1,6 +1,8 @@
 package edu.uw.tcss450.uwnetid.raindropapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -20,7 +22,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     private MainPushMessageReceiver mPushMessageReceiver;
     private NewMessageCountViewModel mNewMessageModel;
+
+    private SharedPreferences sharedPreferences;
+    private SwitchCompat switchCompat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +123,55 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        int id = item.getItemId();
+        Intent mIntent = new Intent(this, LoginActivity.class);
+
+        if (id == R.id.action_settings)
+        {
+            //TODO open a settings fragment
+            Log.d("SETTINGS", "Clicked");
+            return true;
+        }
+
+        if (id == R.id.action_color)
+        {
+            Log.d("COLOR", "Clicked");
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:// Night mode is not active, we're in day time
+                case Configuration.UI_MODE_NIGHT_UNDEFINED:// We don't know what mode we're in, assume notnight
+                default:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:// Night mode is active, we're at night!
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    break;
+            }
+
+            return true;
+        }
+
+        if (id == R.id.action_logout)
+        {
+            Log.d("LOGOUT", "Clicked");
+            startActivity(mIntent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**

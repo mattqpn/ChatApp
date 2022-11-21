@@ -7,13 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="backgroundColor">#FFFFFFFF</color>
-    <color name="textColor">#000000</color>
+    <color name="backgroundColor">#21212121</color>
+    <color name="textColor">#FFFFFFFF</color>
 
 <!--    Added color variables to match required MaterialDesign themes-->
 
-    <color name="primaryColor">#4527a0</color>
-    <color name="primaryLightColor">#7953d2</color>
+    <color name="primaryColor">#2e6a9b</color>
+    <color name="primaryLightColor">#2e8c9b</color>
     <color name="primaryDarkColor">#000070</color>
     <color name="secondaryColor">#b7a57a</color>
     <color name="secondaryLightColor">#ead6a9</color>
