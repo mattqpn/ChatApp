@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.weather.WeatherFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.weather.WeatherFragment"
+    android:background="@drawable/raindrop_weather_background"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="40sp"
+        android:text="Current Weather"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center"
+        android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/currentCity"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="Enter City name"
+            android:inputType="textPersonName" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/currentCountry"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="Enter Country (Optional)"
+            android:inputType="textPersonName" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnEnter"
+            android:layout_marginBottom="10dp"
+            android:background="#14CC60"
+            android:textColor="@android:color/black"
+            android:onClick="getCurrentWeather"
+            android:text="Enter"
+            app:backgroundTint="@null" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/weatherResult" />
+        </ScrollView>
+    </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>
