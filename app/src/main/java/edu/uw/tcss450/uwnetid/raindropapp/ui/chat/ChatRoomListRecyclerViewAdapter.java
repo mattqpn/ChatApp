@@ -1,22 +1,15 @@
 package edu.uw.tcss450.uwnetid.raindropapp.ui.chat;
 
-import android.graphics.drawable.Icon;
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatRoomsCardBinding;
@@ -32,9 +25,9 @@ public class ChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<ChatRo
 //    private final Map<ChatFragment, Boolean> mExpandedFlags;
 
     //Store all of the blogs to present
-    private final List<ChatFragment> mChatrooms;
+    private final List<ChatRoomsViewModel> mChatrooms;
 
-    public ChatRoomListRecyclerViewAdapter(List<ChatFragment> items) {
+    public ChatRoomListRecyclerViewAdapter(List<ChatRoomsViewModel> items) {
         this.mChatrooms = items;
 //        mExpandedFlags = mChatrooms.stream().collect(Collectors.toMap(Function.identity(), blog -> false));
     }
@@ -64,7 +57,7 @@ public class ChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<ChatRo
     public class ChatRoomViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public FragmentChatRoomsCardBinding binding;
-        private ChatFragment mChatrooms;
+        private ChatRoomsViewModel mChatrooms;
         public ChatRoomViewHolder(View view) {
             super(view);
             mView = view;
@@ -102,7 +95,7 @@ public class ChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<ChatRo
 //        }
 
         //this will be the function to send us to the chat rooms
-        void setChatRoomCard(final ChatFragment chatFrag) {
+        void setChatRoomCard(final ChatRoomsViewModel chatFrag) {
             mChatrooms = chatFrag;
             //this button will allow us to open that specific group chat
             binding.buttonFullPost.setOnClickListener(view -> {
@@ -110,7 +103,7 @@ public class ChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<ChatRo
                         ChatRoomListRecyclerViewAdapterDirections
                                 .actionNavigationChatToNavigationChatroom());            });
             //title of the group chat
-            binding.textTitle.setText(chatFrag.getHardCodedChatId());
+            binding.textTitle.setText("chat room");         //need to fix this to read out surface level information about the chat room
 
 //            binding.textPubdate.setText(blog.getPubDate());
             //Use methods in the HTML class to format the HTML found in the text
