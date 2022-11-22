@@ -130,8 +130,8 @@ public class WeatherFragment extends Fragment
                         clouds = jsonMain.getString("clouds");
                         countryName = jsonMain.getString("country_code");
                         cityName = jsonMain.getString("city_name");
-                        binding.weatherResult.setTextColor(Color.rgb(68, 134, 199));
-                        output += "Current weather of " + cityName + " (" + countryName + ")"
+                        binding.weatherResult.setTextColor(Color.rgb(0, 0, 0));
+                        output += "Current Weather of " + cityName + " (" + countryName + ")"
                                 + "\nTemp: " + decimalFormat.format(temp) + " °F"
                                 + "\nHumidity: " + humidity + "%"
                                 + "\nDescription: " + description
