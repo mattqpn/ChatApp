@@ -41,11 +41,10 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnEnter"
+            android:id="@+id/buttonEnter"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
             android:textColor="@android:color/black"
-            android:onClick="getCurrentWeather"
             android:text="Enter"
             app:backgroundTint="@null" />
         <ScrollView

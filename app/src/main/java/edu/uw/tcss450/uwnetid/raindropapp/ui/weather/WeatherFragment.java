@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.icu.text.DecimalFormat;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -45,9 +46,9 @@ public class WeatherFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        currentCity = currentCity.findViewById(R.id.currentCity);
-        currentCountry = currentCountry.findViewById(R.id.currentCountry);
-        weatherResult = weatherResult.findViewById(R.id.weatherResult);
+        currentCity = getActivity().findViewById(R.id.currentCity);
+        currentCountry = getActivity().findViewById(R.id.currentCountry);
+        weatherResult = getActivity().findViewById(R.id.weatherResult);
     }
 
     @Override
@@ -57,27 +58,35 @@ public class WeatherFragment extends Fragment
         binding = FragmentWeatherBinding.inflate(inflater);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+        return binding.getRoot();
     }
 
-    public void getCurrentWeather(View view)
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.buttonEnter.setOnClickListener(this::getCurrentWeather);
+    }
+
+    public void getCurrentWeather(final View view)
     {
         String tempURL = "";
         String city = currentCity.getText().toString();
-        String zipCode = currentCountry.getText().toString();
+        String country = currentCountry.getText().toString();
         if (city.equals(""))
         {
             weatherResult.setText("City field is empty.");
         }
         else
         {
-            if (!zipCode.equals(""))
+            if (!country.equals(""))
             {
-                tempURL = url + "?q=" + city + "," + zipCode + "&appID=" + appID;
+                tempURL = url + "?city=" + city + "&country=" + country + "&key=" + appID;
             }
             else
             {
-                tempURL = url + "?q=" + city + "&appID=" + appID;
+                tempURL = url + "?city=" + city + "&key=" + appID;
             }
             StringRequest stringRequest = new StringRequest(Request.Method.POST,
                     tempURL, new Response.Listener<String>()
