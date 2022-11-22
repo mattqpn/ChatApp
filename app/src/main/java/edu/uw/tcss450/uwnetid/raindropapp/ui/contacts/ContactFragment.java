@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentContactBinding;
 
@@ -35,20 +37,41 @@ public class ContactFragment extends Fragment {
         ContactFragmentArgs args = ContactFragmentArgs.fromBundle(getArguments());
 
         FragmentContactBinding binding = FragmentContactBinding.bind(getView());
+        binding.textUsername.setText(args.getContact().getTitle());
 
-//        binding.textPubdate.setText(args.getContact().getPubDate());
-        binding.textTitle.setText(args.getContact().getTitle());
+        int status = args.getContact().getContactStatus();
+        String contactStatus;
 
-//        final String preview =  Html.fromHtml(
-//                        args.getContact().getTeaser(),
-//                        Html.FROM_HTML_MODE_COMPACT)
-//                .toString();
-//        binding.textPreview.setText(preview);
 
-        //Note we are using an Intent here to start the default system web browser
-//        binding.buttonUrl.setOnClickListener(button ->
-//                startActivity(new Intent(Intent.ACTION_VIEW,
-//                        Uri.parse(args.getContact().getUrl()))));
+        if(status == 1) {
+            contactStatus = "Friends";
+            binding.buttonRemoveContact.setOnClickListener(button -> {
+                binding.buttonContactStatus.setText("Add Friend");
+                binding.buttonRemoveContact.setVisibility(View.GONE);
+                binding.buttonContactStatus.setOnClickListener(request ->{
+                        binding.buttonContactStatus.setText("Requested");
+                        binding.buttonRemoveContact.setText("Cancel Request");
+                        binding.buttonRemoveContact.setVisibility(View.VISIBLE);
+                });
+            });
+
+
+        } else {
+            contactStatus = "Add Friend";
+            binding.buttonContactStatus.setOnClickListener(button -> {
+                binding.buttonContactStatus.setText("Requested");
+                binding.buttonRemoveContact.setText("Cancel Request");
+                binding.buttonRemoveContact.setVisibility(View.VISIBLE);
+                binding.buttonRemoveContact.setOnClickListener(request ->{
+                        binding.buttonRemoveContact.setVisibility(View.GONE);
+                        binding.buttonContactStatus.setText("Add Friend");
+                });
+            });
+
+            binding.buttonRemoveContact.setVisibility(View.GONE);
+        }
+
+        binding.buttonContactStatus.setText(contactStatus);
 
     }
 

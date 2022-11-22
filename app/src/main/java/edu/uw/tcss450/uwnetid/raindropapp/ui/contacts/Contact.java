@@ -1,5 +1,7 @@
 package edu.uw.tcss450.uwnetid.raindropapp.ui.contacts;
 
+import android.widget.ImageView;
+
 import java.io.Serializable;
 
 /**
@@ -13,11 +15,9 @@ import java.io.Serializable;
  */
 public class Contact implements Serializable {
 
-    //private final String mPubDate;
     private final String mTitle;
-//    private final String mUrl;
-//    private final String mTeaser;
-//    private final String mAuthor;
+    private int mContactStatus;
+    //private ImageView mContactPhoto;
 
     /**
      * Helper class for building Credentials.
@@ -25,11 +25,9 @@ public class Contact implements Serializable {
      * @author Charles Bryan
      */
     public static class Builder {
-//        private final String mPubDate;
         private final String mTitle;
-//        private  String mUrl = "";
-//        private  String mTeaser = "";
-//        private  String mAuthor = "";
+        private int mContactStatus;
+        //private ImageView mContactPhoto;
 
 
         /**
@@ -38,40 +36,13 @@ public class Contact implements Serializable {
         // * @param pubDate the published date of the blog post
          * @param title the title of the blog post
          */
-        public Builder(/*String pubDate,*/ String title) {
-//            this.mPubDate = pubDate;
+        public Builder(String title, int status) {
             this.mTitle = title;
+            this.mContactStatus = status;
+            //this.mContactPhoto = photo;
         }
 
-//        /**
-//         * Add an optional url for the full blog post.
-//         * @param val an optional url for the full blog post
-//         * @return the Builder of this BlogPost
-//         */
-//        public Builder addUrl(final String val) {
-//            mUrl = val;
-//            return this;
-//        }
-//
-//        /**
-//         * Add an optional teaser for the full blog post.
-//         * @param val an optional url teaser for the full blog post.
-//         * @return the Builder of this BlogPost
-//         */
-//        public Builder addTeaser(final String val) {
-//            mTeaser = val;
-//            return this;
-//        }
-//
-//        /**
-//         * Add an optional author of the blog post.
-//         * @param val an optional author of the blog post.
-//         * @return the Builder of this BlogPost
-//         */
-//        public Builder addAuthor(final String val) {
-//            mAuthor = val;
-//            return this;
-//        }
+        //public
 
         public Contact build() {
             return new Contact(this);
@@ -80,33 +51,18 @@ public class Contact implements Serializable {
     }
 
     private Contact(final Builder builder) {
-//        this.mPubDate = builder.mPubDate;
         this.mTitle = builder.mTitle;
-//        this.mUrl = builder.mUrl;
-//        this.mTeaser = builder.mTeaser;
-//        this.mAuthor = builder.mAuthor;
+        this.mContactStatus = builder.mContactStatus;
+        //this.mContactPhoto = builder.mContactPhoto;
     }
-
-//    public String getPubDate() {
-//        return mPubDate;
-//    }
 
     public String getTitle() {
         return mTitle;
     }
 
-//    public String getUrl() {
-//        return mUrl;
-//    }
-//
-//    public String getTeaser() {
-//        return mTeaser;
-//    }
-//
-//    public String getAuthor() {
-//        return mAuthor;
-//    }
-
+    public int getContactStatus() {
+        return mContactStatus;
+    }
 
 }
 

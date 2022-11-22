@@ -144,17 +144,11 @@ import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentContactCardBinding;
 
 public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> {
-
-    //Store the expanded state for each List item, true -> expanded, false -> not
-    private final Map<Contact, Boolean> mExpandedFlags;
-
     //Store all of the blogs to present
     private final List<Contact> mContacts;
 
     public ContactRecyclerViewAdapter(List<Contact> items) {
         this.mContacts = items;
-        mExpandedFlags = mContacts.stream()
-                .collect(Collectors.toMap(Function.identity(), blog -> false));
     }
 
     @NonNull
@@ -187,56 +181,16 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
             super(view);
             mView = view;
             binding = FragmentContactCardBinding.bind(view);
-            binding.buittonMore.setOnClickListener(this::handleMoreOrLess);
         }
-        /**
-         * When the button is clicked in the more state, expand the card to display
-         * the blog preview and switch the icon to the less state.  When the button
-         * is clicked in the less state, shrink the card and switch the icon to the
-         * more state.
-         //         * @param button the button that was clicked
-         */
-        private void handleMoreOrLess(final View button) {
-            mExpandedFlags.put(mContact, !mExpandedFlags.get(mContact));
-//            displayPreview();
-        }
-        /**
-         * Helper used to determine if the preview should be displayed or not.
-         */
-//        private void displayPreview() {
-//            if (mExpandedFlags.get(mContact)) {
-//                if (binding.textPreview.getVisibility() == View.GONE) {
-//                    binding.textPreview.setVisibility(View.VISIBLE);
-//                    binding.buittonMore.setImageIcon(
-//                            Icon.createWithResource(
-//                                    mView.getContext(),
-//                                    R.drawable.ic_arrow_right_grey_24dp));
-//                } else {
-//                    binding.textPreview.setVisibility(View.GONE);
-//                    binding.buittonMore.setImageIcon(
-//                            Icon.createWithResource(
-//                                    mView.getContext(),
-//                                    R.drawable.ic_arrow_right_grey_24dp));
-//                }
-//            }
-//        }
+
         void setContact(final Contact contact) {
             mContact = contact;
-            binding.buttonFullPost.setOnClickListener(view -> {
+            binding.buttonMore.setOnClickListener(view -> {
                 Navigation.findNavController(mView).navigate(
                         ContactListFragmentDirections
                                 .actionNavigationContactsToContactFragment(contact));
             });
-            binding.textTitle.setText(contact.getTitle());
-//            binding.textPubdate.setText(contact.getPubDate());
-            //Use methods in the HTML class to format the HTML found in the text
-//            final String preview =  Html.fromHtml(
-//                            contact.getTeaser(),
-//                            Html.FROM_HTML_MODE_COMPACT)
-//                    .toString().substring(0,100) //just a preview of the teaser
-//                    + "...";
-//            binding.textPreview.setText(preview);
-//            displayPreview();
+            binding.textUsername.setText(contact.getTitle());
         }
     }
 }

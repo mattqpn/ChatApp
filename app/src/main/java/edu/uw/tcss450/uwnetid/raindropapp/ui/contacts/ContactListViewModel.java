@@ -63,18 +63,9 @@ public class ContactListViewModel extends AndroidViewModel {
                     for(int i = 0; i < data.length(); i++) {
                         JSONObject jsonBlog = data.getJSONObject(i);
                         Contact post = new Contact.Builder(
-//                                jsonBlog.getString(
-//                                        getString.apply(
-//                                                R.string.keys_json_blogs_pubdate)),
                                 jsonBlog.getString(
                                         getString.apply(
-                                                R.string.keys_json_blogs_title)))
-//                                .addTeaser(jsonBlog.getString(
-//                                        getString.apply(
-//                                                R.string.keys_json_blogs_teaser)))
-//                                .addUrl(jsonBlog.getString(
-//                                        getString.apply(
-//                                                R.string.keys_json_blogs_url)))
+                                                R.string.keys_json_blogs_title)), 1)
                                 .build();
                         if (!mContacts.getValue().contains(post)) {
                             mContacts.getValue().add(post);
