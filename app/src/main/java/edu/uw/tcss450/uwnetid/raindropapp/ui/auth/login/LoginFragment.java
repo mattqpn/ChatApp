@@ -80,9 +80,8 @@ public class LoginFragment extends Fragment {
 
 
         LoginFragmentArgs args = LoginFragmentArgs.fromBundle(getArguments());
-        //TODO: Remove hard-coded email and password
-        binding.editEmail.setText(args.getEmail().equals("default") ? "cfb3@uw.edu" : args.getEmail());
-        binding.editPassword.setText(args.getPassword().equals("default") ? "Ads1234#" : args.getPassword());
+        binding.editEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
+        binding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
 
         //don't allow sign in until pushy token retrieved
         mPushyTokenViewModel.addTokenObserver(getViewLifecycleOwner(), token ->
