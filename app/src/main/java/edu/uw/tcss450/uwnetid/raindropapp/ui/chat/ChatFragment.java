@@ -97,4 +97,8 @@ public class ChatFragment extends Fragment {
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));
     }
+
+    public int getHardCodedChatId(){
+        return getHardCodedChatId();
+    }
 }

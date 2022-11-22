@@ -21,8 +21,16 @@
         android:label="@string/title_contacts"
         tools:layout="@layout/fragment_contacts" />
     <fragment
-        android:id="@+id/navigation_chat"
+        android:id="@+id/navigation_chatroom"
         android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.chat.ChatFragment"
         android:label="@string/title_chat"
         tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.chat.ChatRoomListRecyclerViewAdapter"
+        android:label="ChatRoomListRecyclerViewAdapter" >
+        <action
+            android:id="@+id/action_navigation_chat_to_navigation_chatroom"
+            app:destination="@id/navigation_chatroom" />
+    </fragment>
 </navigation>

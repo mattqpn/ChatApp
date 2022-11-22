@@ -24,4 +24,6 @@
     <color name="colorPrimary">@color/primaryColor</color>
     <color name="colorPrimaryDark">@color/primaryDarkColor</color>
     <color name="colorAccent">@color/secondaryColor</color>
+    <color name="colorOffWhite">#FFF9F9</color>
+    <color name="colorPrimaryAlpha">#226200EE</color>
 </resources>
