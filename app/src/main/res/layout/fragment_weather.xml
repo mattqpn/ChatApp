@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:textColor="@color/black"
         android:textSize="40sp"
-        android:text="Current Weather"/>
+        android:text="Current Weather" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,25 +25,25 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/currentCity"
+            android:id="@+id/current_city"
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Enter City name"
             android:inputType="textPersonName"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@android:color/black" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/currentCountry"
+            android:id="@+id/current_country"
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Enter Country (Optional)"
             android:inputType="textPersonName"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@android:color/black" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonEnter"
+            android:id="@+id/button_enter"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
             android:textColor="@color/white"
@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/weatherResult" />
+                android:id="@+id/weather_result" />
         </ScrollView>
     </LinearLayout>
 

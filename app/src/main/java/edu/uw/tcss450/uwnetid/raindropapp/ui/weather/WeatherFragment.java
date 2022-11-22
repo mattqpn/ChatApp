@@ -39,16 +39,19 @@ public class WeatherFragment extends Fragment
     EditText currentCity, currentCountry;
     TextView weatherResult;
     private final String url = "https://api.weatherbit.io/v2.0/current";
-    private final String appID = "0721a87721a04175806802e3e8688271";
+    private final String mKey = "f0a7f688802a43609edd1fc3a82260ca";
+    //private final String key = "0721a87721a04175806802e3e8688271";
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+    public WeatherFragment()
+    {
+        //Required empty public constructor
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        currentCity = getActivity().findViewById(R.id.currentCity);
-        currentCountry = getActivity().findViewById(R.id.currentCountry);
-        weatherResult = getActivity().findViewById(R.id.weatherResult);
     }
 
     @Override
@@ -69,11 +72,16 @@ public class WeatherFragment extends Fragment
         binding.buttonEnter.setOnClickListener(this::getCurrentWeather);
     }
 
+    /**
+     *
+     * @param view
+     */
     public void getCurrentWeather(final View view)
     {
         String tempURL = "";
-        String city = currentCity.getText().toString();
-        String country = currentCountry.getText().toString();
+        String city = binding.currentCity.getText().toString();
+        String country = binding.currentCountry.getText().toString();
+
         if (city.equals(""))
         {
             weatherResult.setText("City field is empty.");
@@ -82,13 +90,14 @@ public class WeatherFragment extends Fragment
         {
             if (!country.equals(""))
             {
-                tempURL = url + "?city=" + city + "&country=" + country + "&key=" + appID;
+                tempURL = url + "?city=" + city + "&country=" + country + "&key=" +
+                        mKey;
             }
             else
             {
-                tempURL = url + "?city=" + city + "&key=" + appID;
+                tempURL = url + "?city=" + city + "&key=" + mKey;
             }
-            StringRequest stringRequest = new StringRequest(Request.Method.POST,
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     tempURL, new Response.Listener<String>()
             {
                 @Override
@@ -97,50 +106,38 @@ public class WeatherFragment extends Fragment
                     Log.d("Response", response);
                     String output = "";
                     JSONObject jsonResponse;
-                    JSONArray jsonArray;
                     JSONObject jsonWeather;
                     String description;
+                    JSONArray jsonArray;
                     JSONObject jsonMain;
                     double temp;
-                    double feelsLike;
-                    float pressure;
                     int humidity;
-                    JSONObject jsonWind;
                     String wind;
-                    JSONObject jsonClouds;
                     String clouds;
-                    JSONObject jsonSys;
                     String countryName;
                     String cityName;
 
                     try
                     {
                         jsonResponse = new JSONObject(response);
-                        jsonArray = jsonResponse.getJSONArray("weather");
-                        jsonWeather = jsonArray.getJSONObject(0);
+                        jsonArray = jsonResponse.getJSONArray("data");
+                        jsonMain = jsonArray.getJSONObject(0);
+                        jsonWeather = jsonMain.getJSONObject("weather");
                         description = jsonWeather.getString("description");
-                        jsonMain = jsonResponse.getJSONObject("main");
-                        temp = jsonMain.getDouble("temp") - 273.15;
-                        feelsLike = jsonMain.getDouble("feels_like") - 273.15;
-                        pressure = jsonMain.getInt("pressure");
-                        humidity = jsonMain.getInt("humidity");
-                        jsonWind = jsonResponse.getJSONObject("wind");
-                        wind = jsonWind.getString("speed");
-                        jsonClouds = jsonResponse.getJSONObject("clouds");
-                        clouds = jsonClouds.getString("all");
-                        jsonSys = jsonResponse.getJSONObject("sys");
-                        countryName = jsonSys.getString("country");
-                        cityName = jsonResponse.getString("name");
-                        weatherResult.setTextColor(Color.rgb(68, 134, 199));
+                        temp = (jsonMain.getDouble("app_temp") * 1.8) + 32;
+                        humidity = jsonMain.getInt("rh");
+                        wind = jsonMain.getString("wind_spd");
+                        clouds = jsonMain.getString("clouds");
+                        countryName = jsonMain.getString("country_code");
+                        cityName = jsonMain.getString("city_name");
+                        binding.weatherResult.setTextColor(Color.rgb(68, 134, 199));
                         output += "Current weather of " + cityName + " (" + countryName + ")"
-                                + "\nTemp: " + decimalFormat.format(temp) + " °C"
-                                + "\nFeels Like: "  + decimalFormat.format(feelsLike) + " °C"
+                                + "\nTemp: " + decimalFormat.format(temp) + " °F"
                                 + "\nHumidity: " + humidity + "%"
                                 + "\nDescription: " + description
                                 + "\nWind Speed: " + wind + "m/s (meters per second)"
-                                + "\nCloudiness: " + clouds + "%"
-                                + "\nPressure: " + pressure + " hPa";
-                        weatherResult.setText(output);
+                                + "\nCloudiness: " + clouds + "%";
+                        binding.weatherResult.setText(output);
                     }
                     catch (JSONException e)
                     {
