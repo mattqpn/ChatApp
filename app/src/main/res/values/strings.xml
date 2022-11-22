@@ -3,6 +3,8 @@
 
     <string name="prompt_email">Enter your email address</string>
     <string name="prompt_password">Enter your password</string>
+    <string name="prompt_search">Search</string>
+
     <string name="action_login">Login</string>
     <string name="action_next">Next</string>
     <string name="action_settings">Settings</string>
@@ -12,12 +14,18 @@
     <string name="base_url_service">https://team-6-tcss-450.herokuapp.com/</string>
     <string name="base_url_auth">https://team-6-tcss-450.herokuapp.com/</string>
 
+    <string name="action_search">Search</string>
+    <string name="action_link">Full Post</string>
+
     <string name="title_home">Home</string>
     <string name="title_contacts">Contacts</string>
     <string name="title_weather">Weather</string>
     <string name="title_chat">Chat</string>
 
     <string name="label_home">Welcome Home %1$s!</string>
+    <string name="text_username">%1$s</string>
+    <string name="text_contact_status">%1$s</string>
+
 
     <string name="hint_first">First Name</string>
     <string name="hint_last">Last Name</string>
