@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@android:color/black"
+        android:textColor="@color/black"
         android:textSize="40sp"
         android:text="Current Weather"/>
 
@@ -29,7 +29,8 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Enter City name"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColorHint="@color/black" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,14 +38,15 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Enter Country (Optional)"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColorHint="@color/black" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buttonEnter"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
-            android:textColor="@android:color/black"
+            android:textColor="@color/white"
             android:text="Enter"
             app:backgroundTint="@null" />
         <ScrollView

@@ -17,16 +17,14 @@
 
         <TextView
             android:id="@+id/text_username"
-            android:layout_width="296dp"
-            android:layout_height="46dp"
+            android:layout_width="247dp"
+            android:layout_height="47dp"
             android:layout_marginStart="4dp"
-            android:background="@color/white"
             android:paddingLeft="8dp"
             android:paddingTop="8dp"
             android:paddingRight="8dp"
             android:text="@string/text_username"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_contact_photo"
@@ -35,17 +33,16 @@
         <ImageButton
             android:id="@+id/button_more"
             style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="4dp"
-            android:background="@android:drawable/screen_background_light_transparent"
+            android:layout_width="79dp"
+            android:layout_height="46dp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/text_username"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.666"
-            app:srcCompat="@drawable/ic_arrow_right_grey_24dp"
-            />
+            app:layout_constraintVertical_bias="0.444"
+            app:srcCompat="@drawable/ic_arrow_right_grey_24dp" />
 
         <ImageView
             android:id="@+id/image_contact_photo"
