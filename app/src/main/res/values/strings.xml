@@ -36,7 +36,7 @@
     <string name="action_register_short">Register</string>
     <string name="display_header_title">Phish Shows Welcomes:</string>
     <string name="image_description_logo">The Phish Logo</string>
-    <string name="password_requirement">Use 8 or more characters with a mix of letters, numbers &amp; symbols</string>
+    <string name="password_requirement">Use 7 or more characters with a mix of letters, numbers &amp; symbols</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="text_blank">Blank text</string>
