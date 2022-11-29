@@ -95,7 +95,7 @@ public class ChatViewModel extends AndroidViewModel {
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
-                this::handelSuccess,
+                this::handleSuccess,
                 this::handleError) {
 
             @Override
@@ -116,6 +116,27 @@ public class ChatViewModel extends AndroidViewModel {
                 .addToRequestQueue(request);
 
         //code here will run
+    }
+
+    public ChatMessage getRecentMessage() {
+        MutableLiveData<List<ChatMessage>> chatLiveLists;
+        List<ChatMessage> chatList;
+        ChatMessage message;
+        int count = 1;
+
+        for (Map.Entry<Integer, MutableLiveData<List<ChatMessage>>> it : mMessages.entrySet()) {
+
+            if (count == mMessages.size()) {
+                chatLiveLists = it.getValue();
+                chatList = chatLiveLists.getValue();
+                message = chatList.get(chatList.size()-1);
+                return message;
+            }
+            count++;
+        }
+
+        return null;
+
     }
 
     /**
@@ -141,7 +162,7 @@ public class ChatViewModel extends AndroidViewModel {
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
-                this::handelSuccess,
+                this::handleSuccess,
                 this::handleError) {
 
             @Override
@@ -176,7 +197,7 @@ public class ChatViewModel extends AndroidViewModel {
         getOrCreateMapEntry(chatId).setValue(list);
     }
 
-    private void handelSuccess(final JSONObject response) {
+    private void handleSuccess(final JSONObject response) {
         List<ChatMessage> list;
         if (!response.has("chatId")) {
             throw new IllegalStateException("Unexpected response in ChatViewModel: " + response);

@@ -41,10 +41,10 @@ import edu.uw.tcss450.uwnetid.raindropapp.R;
 public class ChatRoomsViewModel extends AndroidViewModel {
 
     //list to hold all the possible chats
-    private MutableLiveData<List<ChatRoomsCardFragment>> mChatRoomList;
+    private MutableLiveData<List<ChatFragment>> mChatRoomList;
 
     //jwt token used to find all chats
-    private String mJwt;
+    //private String mJwt;
 
     //constructor
     public ChatRoomsViewModel(@NonNull Application application) {
@@ -55,7 +55,7 @@ public class ChatRoomsViewModel extends AndroidViewModel {
 
 
     public void addChatRoomListObserver(@NonNull LifecycleOwner owner,
-                                    @NonNull Observer<? super List<ChatRoomsCardFragment>> observer) {
+                                    @NonNull Observer<? super List<ChatFragment>> observer) {
         mChatRoomList.observe(owner, observer);
     }
 
@@ -107,14 +107,14 @@ public class ChatRoomsViewModel extends AndroidViewModel {
                         root.getJSONObject(getString.apply(
                                 R.string.keys_json_chat));
 
-                for(int i = 0; i < response.length(); i++) {
-                    ChatRoomsCardFragment chatRoomsCardFragment = new ChatRoomsCardFragment();
-                    if (!mChatRoomList.getValue().contains(chatRoomsCardFragment)) {
-                        mChatRoomList.getValue().add(chatRoomsCardFragment);
+                for (int i = 0; i < response.length(); i++) {
+                    ChatFragment chat = new ChatFragment();
+                    if (!mChatRoomList.getValue().contains(chat)) {
+                        mChatRoomList.getValue().add(chat);
                     }
                 }
 
-        } else {
+            } else {
                 Log.e("ERROR!", "No response");
             }
         } catch (JSONException e) {
@@ -123,48 +123,5 @@ public class ChatRoomsViewModel extends AndroidViewModel {
         }
         mChatRoomList.setValue(mChatRoomList.getValue());
     }
-
-
-//    //figure out how to add chats to our arraylist
-//    private void handleResult(final JSONObject result) {
-//        ArrayList<ChatFragment> chatRoomLists = new ArrayList<>();
-//
-//        try {
-//            JSONObject root = result;
-//            if (root.has(getString.apply(R.string.keys_json_blogs_response))) {
-//                JSONObject response =
-//                        root.getJSONObject(getString.apply(
-//                                R.string.keys_json_blogs_response));
-//                if (response.has(getString.apply(R.string.keys_json_blogs_data))) {
-//                    JSONArray data = response.getJSONArray(
-//                            getString.apply(R.string.keys_json_blogs_data));
-//                    for(int i = 0; i < data.length(); i++) {
-//                        JSONObject jsonBlog = data.getJSONObject(i);
-//                        ChatFragment post = new ChatFragment.Builder(
-//
-//                                jsonBlog.getString(
-//                                        getString.apply(
-//                                                R.string.keys_json_blogs_title)))
-//
-//                                .addUrl(jsonBlog.getString(
-//                                        getString.apply(
-//                                                R.string.keys_json_blogs_url)))
-//                                .build();
-//                        if (!mBlogList.getValue().contains(post)) {
-//                            mBlogList.getValue().add(post);
-//                        }
-//                    }
-//                } else {
-//                    Log.e("ERROR!", "No data array");
-//                }
-//            } else {
-//                Log.e("ERROR!", "No response");
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//            Log.e("ERROR!", e.getMessage());
-//        }
-//        mChatRoomList.setValue(chatRoomLists);
-//    }
 
 }

@@ -12,22 +12,21 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import edu.uw.tcss450.uwnetid.raindropapp.R;
-import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatRoomsCardBinding;
-
+import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatRoomCardBinding;
 /**
  * A simple {@link Fragment} subclass.
  * Use the  factory method to
  * create an instance of this fragment.
  */
-public class ChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomListRecyclerViewAdapter.ChatRoomViewHolder> {
+public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomsRecyclerViewAdapter.ChatRoomViewHolder> {
 
     //Store the expanded state for each List item, true -> expanded, false -> not
 //    private final Map<ChatFragment, Boolean> mExpandedFlags;
 
     //Store all of the blogs to present
-    private final List<ChatRoomsViewModel> mChatrooms;
+    private final List<ChatFragment> mChatrooms;
 
-    public ChatRoomListRecyclerViewAdapter(List<ChatRoomsViewModel> items) {
+    public ChatRoomsRecyclerViewAdapter(List<ChatFragment> items) {
         this.mChatrooms = items;
 //        mExpandedFlags = mChatrooms.stream().collect(Collectors.toMap(Function.identity(), blog -> false));
     }
@@ -37,7 +36,7 @@ public class ChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<ChatRo
     public ChatRoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ChatRoomViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.fragment_chat_rooms_card, parent, false));
+                .inflate(R.layout.fragment_chat_room_card, parent, false));
     }
 
     @Override
@@ -56,12 +55,12 @@ public class ChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<ChatRo
      */
     public class ChatRoomViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public FragmentChatRoomsCardBinding binding;
-        private ChatRoomsViewModel mChatrooms;
+        public FragmentChatRoomCardBinding binding;
+        private ChatFragment mChatrooms;
         public ChatRoomViewHolder(View view) {
             super(view);
             mView = view;
-            binding = FragmentChatRoomsCardBinding.bind(view);
+            binding = FragmentChatRoomCardBinding.bind(view);
 //            binding.buittonMore.setOnClickListener(this::handleMoreOrLess);
         }
         /**
@@ -95,16 +94,17 @@ public class ChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<ChatRo
 //        }
 
         //this will be the function to send us to the chat rooms
-        void setChatRoomCard(final ChatRoomsViewModel chatFrag) {
-            mChatrooms = chatFrag;
+        void setChatRoomCard(final ChatFragment chat) {
+            mChatrooms = chat;
             //this button will allow us to open that specific group chat
-            binding.buttonFullPost.setOnClickListener(view -> {
+            binding.buttonChatRoom.setOnClickListener(view -> {
                 Navigation.findNavController(mView).navigate(
-                        ChatRoomListRecyclerViewAdapterDirections
-                                .actionNavigationChatToNavigationChatroom());            });
+                        ChatRoomsFragmentDirections
+                                .actionNavigationChatroomListToNavigationChat());
+            });
             //title of the group chat
-            binding.textTitle.setText("chat room");         //need to fix this to read out surface level information about the chat room
-
+            binding.textChatMembers.setText("chat room");         //need to fix this to read out surface level information about the chat room
+            //binding.textPreview.setText();
 //            binding.textPubdate.setText(blog.getPubDate());
             //Use methods in the HTML class to format the HTML found in the text
 //            final String preview =  Html.fromHtml(

@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:context="edu.uw.tcss450.uwnetid.raindrop.ui.chat.ChatFragment"
-        tools:listitem="@layout/fragment_chat_rooms_card" />
+        tools:listitem="@layout/fragment_chat_room_card" />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_wait"
         android:layout_width="match_parent"
