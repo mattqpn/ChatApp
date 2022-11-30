@@ -62,7 +62,7 @@ public class ChangePasswordViewModel extends AndroidViewModel {
 
     public void connect(final String email,
                         final String password) {
-        String url = "https://team-6-tcss-450.herokuapp.com/password";
+        String url = "https://tcss450-2022au-group6.herokuapp.com/password";
         JSONObject body = new JSONObject();
         try {
             body.put("email", email);
