@@ -35,7 +35,7 @@ public class ChangePasswordFragment extends Fragment {
 
     private FragmentChangePasswordBinding binding;
 
-    private ChangePasswordViewModel mRegisterModel;
+    private ChangePasswordViewModel mPasswordModel;
 
 
     private PasswordValidator mEmailValidator = checkPwdLength(2)
@@ -57,7 +57,7 @@ public class ChangePasswordFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRegisterModel = new ViewModelProvider(getActivity())
+        mPasswordModel = new ViewModelProvider(getActivity())
                 .get(ChangePasswordViewModel.class);
     }
 
@@ -73,7 +73,7 @@ public class ChangePasswordFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonChange.setOnClickListener(this::attemptChange);
-        mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
+        mPasswordModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
     }
 
@@ -107,7 +107,7 @@ public class ChangePasswordFragment extends Fragment {
     }
 
     private void verifyAuthWithServer() {
-        mRegisterModel.connect(
+        mPasswordModel.connect(
                 binding.editEmail.getText().toString(),
                 binding.editPassword.getText().toString(),
                 binding.editNewPassword1.getText().toString());

@@ -167,12 +167,11 @@ public class MainActivity extends AppCompatActivity {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     break;
             }
-
             return true;
         }
 
-        if (id == R.id.navigation_change_password) {
-            return true;
+        if (id == R.id.action_change_password) {
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.navigation_change_password);
         }
 
         if (id == R.id.action_logout)
