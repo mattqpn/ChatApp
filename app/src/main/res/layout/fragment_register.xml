@@ -25,7 +25,7 @@
         android:ems="10"
         android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/edit_new_password_1"
+        app:layout_constraintBottom_toTopOf="@+id/edit_password_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -60,7 +60,7 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/edit_new_password_1"
+        android:id="@+id/edit_password_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -75,7 +75,7 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/edit_new_password_2"
+        android:id="@+id/edit_password_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -97,7 +97,7 @@
         android:layout_marginEnd="16dp"
         android:text="@string/action_register_short"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_new_password_2" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_password_2" />
 
     <TextView
         android:id="@+id/textView"
@@ -111,6 +111,6 @@
         app:layout_constraintBottom_toTopOf="@+id/button_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_new_password_2" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_password_2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

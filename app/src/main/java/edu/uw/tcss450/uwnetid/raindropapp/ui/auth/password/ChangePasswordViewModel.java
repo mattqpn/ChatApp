@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+import edu.uw.tcss450.uwnetid.raindropapp.R;
+
 public class ChangePasswordViewModel extends AndroidViewModel {
 
     private MutableLiveData<JSONObject> mResponse;
@@ -61,12 +63,15 @@ public class ChangePasswordViewModel extends AndroidViewModel {
     }
 
     public void connect(final String email,
-                        final String password) {
-        String url = "https://tcss450-2022au-group6.herokuapp.com/password";
+                        final String oldPassword,
+                        final String newPassword) {
+        String url = getApplication().getResources().getString(R.string.base_url_service) +
+                "password";
         JSONObject body = new JSONObject();
         try {
             body.put("email", email);
-            body.put("password", password);
+            body.put("old password", oldPassword);
+            body.put("new password", newPassword);
         } catch (JSONException e) {
             e.printStackTrace();
         }

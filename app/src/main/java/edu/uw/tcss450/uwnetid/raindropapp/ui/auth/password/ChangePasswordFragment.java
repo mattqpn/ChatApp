@@ -23,7 +23,7 @@ import androidx.navigation.Navigation;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentRegisterBinding;
+import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChangePasswordBinding;
 import edu.uw.tcss450.uwnetid.raindropapp.ui.auth.register.RegisterFragmentDirections;
 import edu.uw.tcss450.uwnetid.raindropapp.utils.PasswordValidator;
 
@@ -33,18 +33,17 @@ import edu.uw.tcss450.uwnetid.raindropapp.utils.PasswordValidator;
  */
 public class ChangePasswordFragment extends Fragment {
 
-    private FragmentRegisterBinding binding;
+    private FragmentChangePasswordBinding binding;
 
     private ChangePasswordViewModel mRegisterModel;
 
-    private PasswordValidator mNameValidator = checkPwdLength(1);
 
     private PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
 
     private PasswordValidator mPassWordValidator =
-            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
+            checkClientPredicate(pwd -> pwd.equals(binding.editNewPassword2.getText().toString()))
                     .and(checkPwdLength(7))
                     .and(checkPwdSpecialChar())
                     .and(checkExcludeWhiteSpace())
@@ -65,7 +64,7 @@ public class ChangePasswordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentRegisterBinding.inflate(inflater);
+        binding = FragmentChangePasswordBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -73,27 +72,13 @@ public class ChangePasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonRegister.setOnClickListener(this::attemptRegister);
+        binding.buttonChange.setOnClickListener(this::attemptChange);
         mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
     }
 
-    private void attemptRegister(final View button) {
-        validateFirst();
-    }
-
-    private void validateFirst() {
-        mNameValidator.processResult(
-                mNameValidator.apply(binding.editFirst.getText().toString().trim()),
-                this::validateLast,
-                result -> binding.editFirst.setError("Please enter a first name."));
-    }
-
-    private void validateLast() {
-        mNameValidator.processResult(
-                mNameValidator.apply(binding.editLast.getText().toString().trim()),
-                this::validateEmail,
-                result -> binding.editLast.setError("Please enter a last name."));
+    private void attemptChange(final View button) {
+        validateEmail();
     }
 
     private void validateEmail() {
@@ -106,25 +91,26 @@ public class ChangePasswordFragment extends Fragment {
     private void validatePasswordsMatch() {
         PasswordValidator matchValidator =
                 checkClientPredicate(
-                        pwd -> pwd.equals(binding.editPassword2.getText().toString().trim()));
+                        pwd -> pwd.equals(binding.editNewPassword2.getText().toString().trim()));
 
         mEmailValidator.processResult(
-                matchValidator.apply(binding.editPassword1.getText().toString().trim()),
+                matchValidator.apply(binding.editNewPassword1.getText().toString().trim()),
                 this::validatePassword,
-                result -> binding.editPassword1.setError("Passwords must match."));
+                result -> binding.editNewPassword1.setError("Passwords must match."));
     }
 
     private void validatePassword() {
         mPassWordValidator.processResult(
-                mPassWordValidator.apply(binding.editPassword1.getText().toString()),
+                mPassWordValidator.apply(binding.editNewPassword1.getText().toString()),
                 this::verifyAuthWithServer,
-                result -> binding.editPassword1.setError("Please enter a valid Password."));
+                result -> binding.editNewPassword1.setError("Please enter a valid Password."));
     }
 
     private void verifyAuthWithServer() {
         mRegisterModel.connect(
                 binding.editEmail.getText().toString(),
-                binding.editPassword1.getText().toString());
+                binding.editPassword.getText().toString(),
+                binding.editNewPassword1.getText().toString());
         //This is an Asynchronous call. No statements after should rely on the
         //result of connect().
     }
@@ -134,7 +120,7 @@ public class ChangePasswordFragment extends Fragment {
                 RegisterFragmentDirections.actionRegisterFragmentToLoginFragment();
 
         directions.setEmail(binding.editEmail.getText().toString());
-        directions.setPassword(binding.editPassword1.getText().toString());
+        directions.setPassword(binding.editNewPassword1.getText().toString());
 
         Navigation.findNavController(getView()).navigate(directions);
 
@@ -157,7 +143,7 @@ public class ChangePasswordFragment extends Fragment {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             } else {
-                navigateToLogin();
+                //navigateToLogin();
             }
         } else {
             Log.d("JSON Response", "No Response");

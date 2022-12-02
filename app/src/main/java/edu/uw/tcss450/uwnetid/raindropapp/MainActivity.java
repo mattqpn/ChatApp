@@ -37,6 +37,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.ActivityMainBinding;
 import edu.uw.tcss450.uwnetid.raindropapp.model.NewMessageCountViewModel;
+import edu.uw.tcss450.uwnetid.raindropapp.model.PushyTokenViewModel;
 import edu.uw.tcss450.uwnetid.raindropapp.model.UserInfoViewModel;
 import edu.uw.tcss450.uwnetid.raindropapp.services.PushReceiver;
 import edu.uw.tcss450.uwnetid.raindropapp.ui.chat.ChatMessage;
@@ -50,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MainPushMessageReceiver mPushMessageReceiver;
     private NewMessageCountViewModel mNewMessageModel;
-
-    private SharedPreferences sharedPreferences;
-    private SwitchCompat switchCompat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_chat)
+                R.id.navigation_home, R.id.navigation_weather, R.id.navigation_contacts, R.id.navigation_chat)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -157,9 +155,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        if (id == R.id.action_color)
-        {
-            Log.d("COLOR", "Clicked");
+        if (id == R.id.action_color) {
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             switch (currentNightMode) {
                 case Configuration.UI_MODE_NIGHT_NO:// Night mode is not active, we're in day time
@@ -175,11 +171,13 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.navigation_change_password) {
+            return true;
+        }
+
         if (id == R.id.action_logout)
         {
-            Log.d("LOGOUT", "Clicked");
-            startActivity(mIntent);
-            return true;
+            logOut();
         }
 
         return super.onOptionsItemSelected(item);
@@ -216,5 +214,23 @@ public class MainActivity extends AppCompatActivity {
                 mModel.addMessage(intent.getIntExtra("chatid", -1), cm);
             }
         }
+    }
+
+    private void logOut() {
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        prefs.edit().remove(getString(R.string.keys_prefs_jwt)).apply();
+        //End the app completely
+        PushyTokenViewModel model = new ViewModelProvider(this)
+                .get(PushyTokenViewModel.class);
+        //when we hear back from the web service quit
+        model.addResponseObserver(this, result -> finishAndRemoveTask());
+        model.deleteTokenFromWebservice(
+                new ViewModelProvider(this)
+                        .get(UserInfoViewModel.class)
+                        .getmJwt()
+        );
     }
 }

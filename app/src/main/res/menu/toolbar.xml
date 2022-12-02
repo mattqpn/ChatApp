@@ -21,6 +21,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/navigation_change_password"
+        android:orderInCategory="200"
+        android:title="@string/action_change_password_short"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_logout"
         android:orderInCategory="200"
         android:title="@string/action_logout"

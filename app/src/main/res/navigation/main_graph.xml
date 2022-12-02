@@ -37,5 +37,10 @@
             android:name="contact"
             app:argType="edu.uw.tcss450.uwnetid.raindropapp.ui.contacts.Contact" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_change_password"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.auth.password.ChangePasswordFragment"
+        android:label="@string/title_change_password"
+        tools:layout="@layout/fragment_change_password" />
 
 </navigation>
