@@ -80,8 +80,8 @@ public class LoginFragment extends Fragment {
 
 
         LoginFragmentArgs args = LoginFragmentArgs.fromBundle(getArguments());
-        binding.editEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
-        binding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
+        binding.editEmail.setText(args.getEmail().equals("default") ? "test1@test.com" : args.getEmail());
+        binding.editPassword.setText(args.getPassword().equals("default") ? "test12345" : args.getPassword());
 
         //don't allow sign in until pushy token retrieved
         mPushyTokenViewModel.addTokenObserver(getViewLifecycleOwner(), token ->

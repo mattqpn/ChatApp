@@ -156,17 +156,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_color) {
-            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            switch (currentNightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:// Night mode is not active, we're in day time
-                case Configuration.UI_MODE_NIGHT_UNDEFINED:// We don't know what mode we're in, assume notnight
-                default:
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:// Night mode is active, we're at night!
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    break;
-            }
+            changeTheme();
+            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(mIntent);
             return true;
         }
 
@@ -177,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_logout)
         {
             logOut();
+            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(mIntent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -215,6 +209,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Logs user out of app, removes jwt.
+     */
     private void logOut() {
         SharedPreferences prefs =
                 getSharedPreferences(
@@ -231,5 +228,23 @@ public class MainActivity extends AppCompatActivity {
                         .get(UserInfoViewModel.class)
                         .getmJwt()
         );
+    }
+
+    /**
+     * Switchs app theme to nightmode or daymode.
+     */
+    private void changeTheme() {
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:// Night mode is not active, we're in day time
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:// We don't know what mode we're in, assume notnight
+            default:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:// Night mode is active, we're at night!
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+        }
+        this.recreate();
     }
 }
