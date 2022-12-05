@@ -37,7 +37,6 @@ public class ChangePasswordFragment extends Fragment {
 
     private ChangePasswordViewModel mPasswordModel;
 
-
     private PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
@@ -73,7 +72,8 @@ public class ChangePasswordFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonChange.setOnClickListener(this::attemptChange);
-        mPasswordModel.addResponseObserver(getViewLifecycleOwner(),
+        mPasswordModel.addResponseObserver(
+                getViewLifecycleOwner(),
                 this::observeResponse);
     }
 

@@ -70,8 +70,8 @@ public class ChangePasswordViewModel extends AndroidViewModel {
         JSONObject body = new JSONObject();
         try {
             body.put("email", email);
-            body.put("old password", oldPassword);
-            body.put("new password", newPassword);
+            body.put("oldPassword", oldPassword);
+            body.put("newPassword", newPassword);
         } catch (JSONException e) {
             e.printStackTrace();
         }
