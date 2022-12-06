@@ -137,7 +137,7 @@ public class ChangePasswordFragment extends Fragment {
             if (response.has("code")) {
                 try {
                     binding.editEmail.setError(
-                            "Error Authenticating: " +
+                            "Error Changing Password: " +
                                     response.getJSONObject("data").getString("message"));
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
