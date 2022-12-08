@@ -3,6 +3,7 @@
     <string name="keys_json_contact_response">response</string>
     <string name="keys_json_contact_data">data</string>
     <string name="keys_json_contact_username">username</string>
+    <string name="keys_json_contact_status">status</string>
 
     <string name="keys_json_blogs_response">response</string>
     <string name="keys_json_blogs_data">data</string>
