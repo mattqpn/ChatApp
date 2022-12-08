@@ -41,8 +41,7 @@
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/contactFragment"
-
-        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.contacts.ContactsFragment"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.contacts.ContactFragment"
         android:label="@string/title_contacts" >
         <argument
             android:name="contact"
