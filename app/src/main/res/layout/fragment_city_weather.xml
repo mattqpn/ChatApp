@@ -13,43 +13,69 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@android:color/black"
+        android:textColor="@color/black"
         android:textSize="40sp"
-        android:text="Weather" />
-
+        android:text="Search by City" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_city"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="Enter City name"
+            android:inputType="textPersonName"
+            android:textColorHint="@android:color/black" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_country"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="Enter Country (Optional)"
+            android:inputType="textPersonName"
+            android:textColorHint="@android:color/black" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_search_by_city"
+            android:id="@+id/button_current_forecast"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
             android:textColor="@color/white"
-            android:text="Search by City"
+            android:text="Current Weather"
             app:backgroundTint="@null" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_search_by_zipcode"
-            android:layout_marginBottom="10dp"
+            android:id="@+id/button_hourly_forecast"
+            android:layout_marginTop="10dp"
             android:background="#14CC60"
             android:textColor="@color/white"
-            android:text="Search by Zipcode"
+            android:text="Hourly Forecast"
             app:backgroundTint="@null" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_search_by_location"
+            android:id="@+id/button_five_day_forecast"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
             android:textColor="@color/white"
-            android:text="Search by Location"
+            android:text="5 Day Forecast"
             app:backgroundTint="@null" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/weather_result" />
+        </ScrollView>
     </LinearLayout>
 
 </LinearLayout>
