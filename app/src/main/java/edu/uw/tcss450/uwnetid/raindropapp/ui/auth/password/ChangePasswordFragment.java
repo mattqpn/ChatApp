@@ -29,7 +29,7 @@ import edu.uw.tcss450.uwnetid.raindropapp.utils.PasswordValidator;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Change a user's password.
  */
 public class ChangePasswordFragment extends Fragment {
 

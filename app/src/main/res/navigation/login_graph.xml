@@ -24,6 +24,9 @@
             android:name="password"
             app:argType="string"
             android:defaultValue="default" />
+        <action
+            android:id="@+id/action_loginFragment_to_loginVerifyFragment"
+            app:destination="@id/loginVerifyFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
@@ -45,4 +48,9 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/loginVerifyFragment"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.auth.login.LoginVerifyFragment"
+        android:label="fragment_login_verify"
+        tools:layout="@layout/fragment_login_verify" />
 </navigation>
