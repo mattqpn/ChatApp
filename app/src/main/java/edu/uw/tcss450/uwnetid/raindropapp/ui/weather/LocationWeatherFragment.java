@@ -198,7 +198,7 @@ public class LocationWeatherFragment extends Fragment
                         outLatitude = jsonCoord.getString("lat");
                         outLongitude = jsonCoord.getString("lon");
                         mBinding.weatherResult.setTextColor(Color.rgb(0, 0, 0));
-                        output += "Current Weather of " + outLatitude + " (" + outLongitude + ")"
+                        output += "Current Weather of " + outLatitude + ", " + outLongitude
                                 + "\nTemp: " + decimalFormat.format(temp) + " °F"
                                 + "\nFeels Like: " + decimalFormat.format(feelsLike) + " °F"
                                 + "\nHumidity: " + humidity + "%"
