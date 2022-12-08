@@ -6,7 +6,8 @@
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    android:background="@drawable/raindrop_weather_background">
 
     <TextView
         android:id="@+id/text_email"

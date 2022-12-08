@@ -14,7 +14,17 @@
         android:id="@+id/navigation_weather"
         android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.weather.WeatherFragment"
         android:label="@string/title_weather"
-        tools:layout="@layout/fragment_weather" />
+        tools:layout="@layout/fragment_weather" >
+        <action
+            android:id="@+id/action_navigation_weather_to_cityWeatherFragment"
+            app:destination="@id/cityWeatherFragment" />
+        <action
+            android:id="@+id/action_navigation_weather_to_locationWeatherFragment"
+            app:destination="@id/locationWeatherFragment" />
+        <action
+            android:id="@+id/action_navigation_weather_to_zipcodeWeatherFragment"
+            app:destination="@id/zipcodeWeatherFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_contacts"
         android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.contacts.ContactsFragment"
@@ -25,4 +35,25 @@
         android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.chat.ChatFragment"
         android:label="@string/title_chat"
         tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.contacts.ContactsFragment"
+        android:label="@string/title_contacts" >
+        <argument
+            android:name="contact"
+            app:argType="edu.uw.tcss450.uwnetid.raindropapp.ui.contacts.Contact" />
+    </fragment>
+    <fragment
+        android:id="@+id/cityWeatherFragment"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.weather.CityWeatherFragment"
+        android:label="CityWeatherFragment" />
+    <fragment
+        android:id="@+id/locationWeatherFragment"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.weather.LocationWeatherFragment"
+        android:label="LocationWeatherFragment" />
+    <fragment
+        android:id="@+id/zipcodeWeatherFragment"
+        android:name="edu.uw.tcss450.uwnetid.raindropapp.ui.weather.ZipcodeWeatherFragment"
+        android:label="ZipcodeWeatherFragment" />
+
 </navigation>
