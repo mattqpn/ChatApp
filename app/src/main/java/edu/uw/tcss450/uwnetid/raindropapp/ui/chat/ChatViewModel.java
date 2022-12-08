@@ -139,6 +139,8 @@ public class ChatViewModel extends AndroidViewModel {
 
     }
 
+
+
     /**
      * Makes a request to the web service to get the next batch of messages for a given Chat Room.
      * This request uses the earliest known ChatMessage in the associated list and passes that

@@ -20,15 +20,13 @@ import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatRoomCardBindin
  */
 public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomsRecyclerViewAdapter.ChatRoomViewHolder> {
 
-    //Store the expanded state for each List item, true -> expanded, false -> not
-//    private final Map<ChatFragment, Boolean> mExpandedFlags;
 
-    //Store all of the blogs to present
+//    //Store all of the blogs to present
     private final List<ChatFragment> mChatrooms;
 
-    public ChatRoomsRecyclerViewAdapter(List<ChatFragment> items) {
-        this.mChatrooms = items;
-//        mExpandedFlags = mChatrooms.stream().collect(Collectors.toMap(Function.identity(), blog -> false));
+
+    public ChatRoomsRecyclerViewAdapter(List<ChatFragment> mChatrooms) {
+        this.mChatrooms = mChatrooms;
     }
 
     @NonNull
@@ -39,6 +37,7 @@ public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRooms
                 .inflate(R.layout.fragment_chat_room_card, parent, false));
     }
 
+    //might need some changing we will see
     @Override
     public void onBindViewHolder(@NonNull ChatRoomViewHolder holder, int position) {
         holder.setChatRoomCard(mChatrooms.get(position));
@@ -55,65 +54,34 @@ public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRooms
      */
     public class ChatRoomViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public FragmentChatRoomCardBinding binding;
-        private ChatFragment mChatrooms;
+        public FragmentChatRoomCardBinding mBinding;
+        private ChatFragment mChatroom;
         public ChatRoomViewHolder(View view) {
             super(view);
             mView = view;
-            binding = FragmentChatRoomCardBinding.bind(view);
-//            binding.buittonMore.setOnClickListener(this::handleMoreOrLess);
+            mBinding = FragmentChatRoomCardBinding.bind(view);
         }
-        /**
-         * When the button is clicked in the more state, expand the card to display
-         * the blog preview and switch the icon to the less state.  When the button
-         * is clicked in the less state, shrink the card and switch the icon to the
-         * more state.
-         * @param button the button that was clicked
-         */
-//        private void handleMoreOrLess(final View button) {
-//            mExpandedFlags.put(mChatrooms, !mExpandedFlags.get(mChatrooms));
-////            displayPreview();
-//        }
-        /**
-         * Helper used to determine if the preview should be displayed or not.
-         */
-//        private void displayPreview() {
-//            if (mExpandedFlags.get(mChatrooms)) {
-////                binding.textPreview.setVisibility(View.VISIBLE);
-////                binding.buittonMore.setImageIcon(
-////                        Icon.createWithResource(
-////                                mView.getContext(),
-////                                R.drawable.ic_less_grey_24dp));
-//            } else {
-//                binding.textPreview.setVisibility(View.GONE);
-//                binding.buittonMore.setImageIcon(
-//                        Icon.createWithResource(
-//                                mView.getContext(),
-//                                R.drawable.ic_more_grey_24dp));
-//            }
-//        }
 
         //this will be the function to send us to the chat rooms
         void setChatRoomCard(final ChatFragment chat) {
-            mChatrooms = chat;
+            mChatroom = chat;
+            String mSender = chat.getInfo()[1];
+            String mMessage = chat.getInfo()[0];
+            String result = mSender + ": " + mMessage;
             //this button will allow us to open that specific group chat
-            binding.buttonChatRoom.setOnClickListener(view -> {
+            mBinding.buttonChatRoom.setOnClickListener(view -> {
                 Navigation.findNavController(mView).navigate(
                         ChatRoomsFragmentDirections
                                 .actionNavigationChatroomListToNavigationChat());
             });
             //title of the group chat
-            binding.textChatMembers.setText("chat room");         //need to fix this to read out surface level information about the chat room
-            //binding.textPreview.setText();
-//            binding.textPubdate.setText(blog.getPubDate());
-            //Use methods in the HTML class to format the HTML found in the text
-//            final String preview =  Html.fromHtml(
-//                            blog.getTeaser(),
-//                            Html.FROM_HTML_MODE_COMPACT)
-//                    .toString().substring(0,100) //just a preview of the teaser
-//                    + "...";
-//            binding.textPreview.setText(preview);
-//            displayPreview();
+            mBinding.textChatMembers.setText("chat room");         //need to fix this to read out surface level information about the chat room
+            if(mSender.length() + mMessage.length() > 50){
+                int size = 48 - mSender.length();
+                result = mSender + ": " + mMessage.substring(0,size)+ "...";
+            }
+            mBinding.textPreview.setText(result);
+//            mBinding.textChatMembers.setText("Group Chat");
         }
     }
 }

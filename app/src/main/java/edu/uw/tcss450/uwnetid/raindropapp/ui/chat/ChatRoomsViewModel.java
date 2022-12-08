@@ -25,10 +25,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.IntFunction;
 
 import edu.uw.tcss450.uwnetid.raindropapp.R;
@@ -44,7 +46,7 @@ public class ChatRoomsViewModel extends AndroidViewModel {
     private MutableLiveData<List<ChatFragment>> mChatRoomList;
 
     //jwt token used to find all chats
-    //private String mJwt;
+    private String mJwt;
 
     //constructor
     public ChatRoomsViewModel(@NonNull Application application) {
@@ -60,9 +62,9 @@ public class ChatRoomsViewModel extends AndroidViewModel {
     }
 
     //gets chats from with our JWT token
-    public void connectGet(String jwt) {
+    public void connectGet(String jwt, final int chatId) {
         String url =
-                "https://team-6-tcss-450.herokuapp.com/";
+                "https://tcss450-2022au-group6.herokuapp.com/" +  "chats"  + chatId;       //need to figure out the sql table and what is in it
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -90,12 +92,24 @@ public class ChatRoomsViewModel extends AndroidViewModel {
 
 
     private void handleError(final VolleyError error) {
-        //you should add much better error handling in a production release.
-        //i.e. YOUR PROJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
-        throw new IllegalStateException(error.getMessage());
+        if (Objects.isNull(error.networkResponse)) {
+            Log.e("NETWORK ERROR", error.getMessage());
+        }
+        else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            Log.e("CLIENT ERROR",
+                    error.networkResponse.statusCode +
+                            " " +
+                            data);
+        }
     }
 
+
+    public void createChatRoom(String mChatName, String mJwt){
+
+    }
+
+    //Work on this
     //need to figure how to fill up the array of the chatroomcardfragments that is what to be displayed on recycler view adapter
     private void handleResult(final JSONObject result) {
         IntFunction<String> getString =

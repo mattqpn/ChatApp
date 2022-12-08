@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatBinding;
@@ -30,6 +29,10 @@ public class ChatFragment extends Fragment {
     private UserInfoViewModel mUserModel;
     private ChatSendViewModel mSendModel;
 
+//    private int mChatID;
+//    private ChatFragmentArgs mArgs;
+
+
     public ChatFragment() {
         // Required empty public constructor
     }
@@ -42,6 +45,10 @@ public class ChatFragment extends Fragment {
         mChatModel = provider.get(ChatViewModel.class);
         mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
+
+//        mArgs = ChatFragmentArgs.fromBundle(getArguments());
+//        mChatID = mArgs.getChatRoom().getChatId();
+
     }
 
     @Override
@@ -63,14 +70,39 @@ public class ChatFragment extends Fragment {
 
         final RecyclerView rv = binding.recyclerMessages;
         //Set the Adapter to hold a reference to the list FOR THIS chat ID that the ViewModel
-        //holds.
+//        holds.
         rv.setAdapter(new ChatRecyclerViewAdapter(
                         mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID),
                         mUserModel.getEmail()));
 
+//        rv.setAdapter(new ChatRoomsRecyclerViewAdapter(
+//                mChatModel.getMessageListByChatId(getChatId()),
+//                mUserModel.getEmail()));
+
+//
+//        // Send the user to the bottom of the recycler view.
+//        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
 
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
+//        binding.swipeContainer.setOnRefreshListener(() -> {
+//            mChatModel.getNextMessages(getChatId(), mUserModel.getmJwt());
+//        });
+//
+//        mChatModel.addMessageObserver(getChatId(), getViewLifecycleOwner(),
+//                list -> {
+//                    /*
+//                     * This solution needs work on the scroll position. As a group,
+//                     * you will need to come up with some solution to manage the
+//                     * recyclerview scroll position. You also should consider a
+//                     * solution for when the keyboard is on the screen.
+//                     */
+//                    //inform the RV that the underlying list has (possibly) changed
+//                    rv.getAdapter().notifyDataSetChanged();
+//                    rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
+//                    binding.swipeContainer.setRefreshing(false);
+//                });
+
         binding.swipeContainer.setOnRefreshListener(() -> {
             mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         });
@@ -90,6 +122,11 @@ public class ChatFragment extends Fragment {
                 });
 
         //Send button was clicked. Send the message via the SendViewModel
+//        binding.buttonSend.setOnClickListener(button -> {
+//            mSendModel.sendMessage(getChatId(),
+//                    mUserModel.getmJwt(),
+//                    binding.editMessage.getText().toString());
+//        });
         binding.buttonSend.setOnClickListener(button -> {
             mSendModel.sendMessage(HARD_CODED_CHAT_ID,
                     mUserModel.getmJwt(),
@@ -101,7 +138,9 @@ public class ChatFragment extends Fragment {
                 binding.editMessage.setText(""));
     }
 
-    public int getHardCodedChatId(){
-        return getHardCodedChatId();
+    public String[] getInfo(){
+        String[] ret = {mChatModel.getRecentMessage().getMessage(),mChatModel.getRecentMessage().getSender()};
+        return ret;
     }
+
 }
