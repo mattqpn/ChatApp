@@ -44,7 +44,6 @@
     <string name="password_requirement">Use 7 or more characters with a mix of letters, numbers &amp; symbols</string>
     <string name="hint_verify">Verification Code</string>
     <string name="action_verify_short">Verify</string>
-    <string name="verify_notice">Email is not verified</string>
 
     <string name="keys_shared_prefs">My Auth App Shared Prefs</string>
     <string name="keys_prefs_jwt">Sharded Prefs JWT</string>

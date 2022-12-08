@@ -38,9 +38,7 @@ public class LoginFragment extends Fragment {
     private PasswordValidator mPassWordValidator = checkPwdLength(1)
             .and(checkExcludeWhiteSpace());
 
-    private PasswordValidator mCodeValidator = checkPwdLength(6)
-            .and(checkPwdDigit())
-            .and(checkExcludeWhiteSpace());
+    private PasswordValidator mCodeValidator = (checkExcludeWhiteSpace());
 
     private PushyTokenViewModel mPushyTokenViewModel;
     private UserInfoViewModel mUserViewModel;
@@ -127,7 +125,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void verifyAuthWithServer() {
-        mLoginModel.verify(
+        mLoginModel.connect(
                 binding.editEmail.getText().toString(),
                 binding.editVerifyCode.getText().toString());
         //This is an Asynchronous call. No statements after should rely on the
@@ -135,9 +133,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void verifyCodeWithServer() {
-        mLoginModel.connect(
+        mLoginModel.verify(
                 binding.editEmail.getText().toString(),
-                binding.editPassword.getText().toString());
+                binding.editVerifyCode.getText().toString());
         //This is an Asynchronous call. No statements after should rely on the
         //result of connect().
     }
@@ -178,6 +176,8 @@ public class LoginFragment extends Fragment {
                             )).get(UserInfoViewModel.class);
                     if (response.has("User is not verified")) {
                         //TODO make verify code buttons appear
+                        binding.editEmail.setError(
+                                "User is not verified");
                     } else {
                         sendPushyToken();
                     }
