@@ -38,6 +38,10 @@ public class LoginFragment extends Fragment {
     private PasswordValidator mPassWordValidator = checkPwdLength(1)
             .and(checkExcludeWhiteSpace());
 
+    private PasswordValidator mCodeValidator = checkPwdLength(6)
+            .and(checkPwdDigit())
+            .and(checkExcludeWhiteSpace());
+
     private PushyTokenViewModel mPushyTokenViewModel;
     private UserInfoViewModel mUserViewModel;
 
@@ -77,6 +81,7 @@ public class LoginFragment extends Fragment {
                 getViewLifecycleOwner(),
                 this::observeResponse);
 
+        binding.buttonVerify.setOnClickListener(this::attemptVerify);
 
 
         LoginFragmentArgs args = LoginFragmentArgs.fromBundle(getArguments());
@@ -96,11 +101,22 @@ public class LoginFragment extends Fragment {
         validateEmail();
     }
 
+    private void attemptVerify(final View button) {
+        validateCode();
+    }
+
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(binding.editEmail.getText().toString().trim()),
                 this::validatePassword,
                 result -> binding.editEmail.setError("Please enter a valid Email address."));
+    }
+
+    private void validateCode() {
+        mEmailValidator.processResult(
+                mCodeValidator.apply(binding.editVerifyCode.getText().toString().trim()),
+                this::verifyCodeWithServer,
+                result -> binding.editVerifyCode.setError("Please enter a valid validation Code."));
     }
 
     private void validatePassword() {
@@ -111,6 +127,14 @@ public class LoginFragment extends Fragment {
     }
 
     private void verifyAuthWithServer() {
+        mLoginModel.verify(
+                binding.editEmail.getText().toString(),
+                binding.editVerifyCode.getText().toString());
+        //This is an Asynchronous call. No statements after should rely on the
+        //result of connect().
+    }
+
+    private void verifyCodeWithServer() {
         mLoginModel.connect(
                 binding.editEmail.getText().toString(),
                 binding.editPassword.getText().toString());
@@ -152,7 +176,11 @@ public class LoginFragment extends Fragment {
                                     binding.editEmail.getText().toString(),
                                     response.getString("token")
                             )).get(UserInfoViewModel.class);
-                    sendPushyToken();
+                    if (response.has("User is not verified")) {
+                        //TODO make verify code buttons appear
+                    } else {
+                        sendPushyToken();
+                    }
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }

@@ -167,6 +167,11 @@ public class PushyTokenViewModel extends AndroidViewModel{
         }
     }
 
+    /**
+     * Send this Pushy device token to the web service.
+     * @param jwt
+     * @throws IllegalStateException when this method is called before the token is retrieve
+     */
     public void deleteTokenFromWebservice(final String jwt) {
         String url = getApplication().getResources().getString(R.string.base_url_auth) +
                 "auth";
