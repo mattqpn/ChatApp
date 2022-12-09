@@ -80,7 +80,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                             res.getColor(R.color.primaryLightColor, null),
                             16));
                 binding.textMessage.setTextColor(
-                        res.getColor(R.color.secondaryTextColorFade, null));
+                        res.getColor(R.color.textColor, null));
 
                 card.setStrokeWidth(standard / 5);
                 card.setStrokeColor(ColorUtils.setAlphaComponent(
