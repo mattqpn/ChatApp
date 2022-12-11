@@ -38,14 +38,8 @@ import edu.uw.tcss450.uwnetid.raindropapp.ui.list.ChatDisplay;
  */
 public class ChatRoomsViewModel extends AndroidViewModel {
 
-    //list to hold all the possible chats
     private MutableLiveData<List<ChatDisplay>> mChatRoomList;
 
-//    //jwt token used to find all chats
-//    private String mJwt;
-//    private int mChatId;
-
-    //constructor
     public ChatRoomsViewModel(@NonNull Application application) {
         super(application);
         mChatRoomList = new MutableLiveData<>();
@@ -58,7 +52,6 @@ public class ChatRoomsViewModel extends AndroidViewModel {
         mChatRoomList.observe(owner, observer);
     }
 
-    //gets chats from with our JWT token
     public void connectGet(String jwt) {
 //        mJwt = jwt;
 
@@ -105,36 +98,7 @@ public class ChatRoomsViewModel extends AndroidViewModel {
     }
 
 
-    //Work on this
-    //need to figure how to fill up the array of the chatroomcardfragments that is what to be displayed on recycler view adapter
     private void handleResult(final JSONObject result) {
-
-//        IntFunction<String> getString =
-//                getApplication().getResources()::getString;
-//        try {
-//            JSONObject root = result;
-//
-//            if (root.has(getString.apply(R.string.keys_json_chat))) {
-//                JSONObject response =
-//                        root.getJSONObject(getString.apply(
-//                                R.string.keys_json_chat));
-//
-//                for (int i = 0; i < response.length(); i++) {
-//                    ChatFragment chat = new ChatFragment();
-//                    if (!mChatRoomList.getValue().contains(chat)) {
-//                        mChatRoomList.getValue().add(chat);
-//                    }
-//                }
-//
-//            } else {
-//
-//                Log.e("ERROR!", "No response");
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//            Log.e("ERROR!", e.getMessage());
-//        }
-//        mChatRoomList.setValue(mChatRoomList.getValue());
         List<ChatDisplay> list = getChatRoomList();
         try {
 //            Log.i("Made it to try statement", "Made it to try statement");
@@ -151,29 +115,6 @@ public class ChatRoomsViewModel extends AndroidViewModel {
             }
             mChatRoomList.setValue(list);
 
-//            list = getMessageListByChatId(result.getInt("chatId"));
-//            JSONArray messages = result.getJSONArray("rows");
-//            for(int i = 0; i < messages.length(); i++) {
-//                JSONObject message = messages.getJSONObject(i);
-//                ChatMessage cMessage = new ChatMessage(
-//                        message.getInt("messageid"),
-//                        message.getString("message"),
-//                        message.getString("email"),
-//                        message.getString("timestamp")
-//                );
-//                if (!list.contains(cMessage)) {
-//                    // don't add a duplicate
-//                    list.add(0, cMessage);
-//                } else {
-//                    // this shouldn't happen but could with the asynchronous
-//                    // nature of the application
-//                    Log.wtf("Chat message already received",
-//                            "Or duplicate id:" + cMessage.getMessageId());
-//                }
-//
-//            }
-//            //inform observers of the change (setValue)
-//            getOrCreateMapEntry(result.getInt("chatId")).setValue(list);
 
         }catch (JSONException e) {
             Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");

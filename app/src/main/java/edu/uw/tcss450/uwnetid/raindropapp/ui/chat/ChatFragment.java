@@ -75,33 +75,6 @@ public class ChatFragment extends Fragment {
                         mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID),
                         mUserModel.getEmail()));
 
-//        rv.setAdapter(new ChatRoomsRecyclerViewAdapter(
-//                mChatModel.getMessageListByChatId(getChatId()),
-//                mUserModel.getEmail()));
-
-//
-//        // Send the user to the bottom of the recycler view.
-//        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
-
-        //When the user scrolls to the top of the RV, the swiper list will "refresh"
-        //The user is out of messages, go out to the service and get more
-//        binding.swipeContainer.setOnRefreshListener(() -> {
-//            mChatModel.getNextMessages(getChatId(), mUserModel.getmJwt());
-//        });
-//
-//        mChatModel.addMessageObserver(getChatId(), getViewLifecycleOwner(),
-//                list -> {
-//                    /*
-//                     * This solution needs work on the scroll position. As a group,
-//                     * you will need to come up with some solution to manage the
-//                     * recyclerview scroll position. You also should consider a
-//                     * solution for when the keyboard is on the screen.
-//                     */
-//                    //inform the RV that the underlying list has (possibly) changed
-//                    rv.getAdapter().notifyDataSetChanged();
-//                    rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
-//                    binding.swipeContainer.setRefreshing(false);
-//                });
 
         binding.swipeContainer.setOnRefreshListener(() -> {
             mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
@@ -121,12 +94,7 @@ public class ChatFragment extends Fragment {
                     binding.swipeContainer.setRefreshing(false);
                 });
 
-        //Send button was clicked. Send the message via the SendViewModel
-//        binding.buttonSend.setOnClickListener(button -> {
-//            mSendModel.sendMessage(getChatId(),
-//                    mUserModel.getmJwt(),
-//                    binding.editMessage.getText().toString());
-//        });
+
         binding.buttonSend.setOnClickListener(button -> {
             mSendModel.sendMessage(HARD_CODED_CHAT_ID,
                     mUserModel.getmJwt(),
@@ -137,10 +105,5 @@ public class ChatFragment extends Fragment {
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));
     }
-
-//    public String[] getInfo(){
-//        String[] ret = {mChatModel.getRecentMessage().getMessage(),mChatModel.getRecentMessage().getSender()};
-//        return ret;
-//    }
 
 }

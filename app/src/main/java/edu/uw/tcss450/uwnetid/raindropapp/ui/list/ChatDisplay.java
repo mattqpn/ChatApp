@@ -16,7 +16,6 @@ public class ChatDisplay implements Serializable {
     private String mChatRoomName;
     private String mMessage;
     private String mSender;
-//    private int mChatRoom;
 
     public ChatDisplay() {
         // Required empty public constructor
@@ -27,11 +26,6 @@ public class ChatDisplay implements Serializable {
         this.mMessage = mMessage;
         this.mSender = mSender;
     }
-
-//    public ChatDisplay(ChatFragment mChatFragment){
-//        mMessage = mChatFragment.getInfo()[0];
-//        mSender = mChatFragment.getInfo()[1];
-//    }
 
     public String getmChatRoomName(){
         return mChatRoomName;
@@ -45,6 +39,9 @@ public class ChatDisplay implements Serializable {
         return temp;
     }
 
+    public String getUser(){
+        return mSender;
+    }
     @Override
     public boolean equals(@Nullable Object obj) {
         return super.equals(obj);

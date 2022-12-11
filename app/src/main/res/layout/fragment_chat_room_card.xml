@@ -37,10 +37,10 @@
             android:id="@+id/text_preview"
             android:layout_width="284dp"
             android:layout_height="31dp"
+            android:layout_marginStart="24dp"
             android:text="@string/text_chat_preview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_chat_room"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_chat_members"
             app:layout_constraintVertical_bias="0.0" />

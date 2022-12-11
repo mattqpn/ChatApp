@@ -80,7 +80,7 @@ public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRooms
                                 .actionNavigationChatroomListToNavigationChat());
             });
             //title of the group chat
-            mBinding.textChatMembers.setText("chat room");         //need to fix this to read out surface level information about the chat room
+            mBinding.textChatMembers.setText(chat.getmChatRoomName());         //need to fix this to read out surface level information about the chat room
             mBinding.textPreview.setText(result);
         }
     }
