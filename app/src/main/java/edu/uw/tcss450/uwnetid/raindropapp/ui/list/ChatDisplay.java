@@ -1,4 +1,4 @@
-package edu.uw.tcss450.uwnetid.raindropapp.ui.chat;
+package edu.uw.tcss450.uwnetid.raindropapp.ui.list;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +16,7 @@ public class ChatDisplay implements Serializable {
     private String mChatRoomName;
     private String mMessage;
     private String mSender;
+//    private int mChatRoom;
 
     public ChatDisplay() {
         // Required empty public constructor
@@ -26,6 +27,11 @@ public class ChatDisplay implements Serializable {
         this.mMessage = mMessage;
         this.mSender = mSender;
     }
+
+//    public ChatDisplay(ChatFragment mChatFragment){
+//        mMessage = mChatFragment.getInfo()[0];
+//        mSender = mChatFragment.getInfo()[1];
+//    }
 
     public String getmChatRoomName(){
         return mChatRoomName;

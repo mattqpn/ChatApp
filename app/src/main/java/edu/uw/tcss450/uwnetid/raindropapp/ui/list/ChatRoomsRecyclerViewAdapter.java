@@ -1,4 +1,4 @@
-package edu.uw.tcss450.uwnetid.raindropapp.ui.chat;
+package edu.uw.tcss450.uwnetid.raindropapp.ui.list;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,6 +13,7 @@ import java.util.List;
 
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatRoomCardBinding;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the  factory method to
@@ -22,12 +23,17 @@ public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRooms
 
 
 //    //Store all of the blogs to present
-    private final List<ChatFragment> mChatrooms;
+//    private final List<ChatFragment> mChatrooms;
+    private final List<ChatDisplay> mChatrooms;
 
+//    public ChatRoomsRecyclerViewAdapter(List<ChatFragment> mChatrooms) {
+//        this.mChatrooms = mChatrooms;
+//    }
 
-    public ChatRoomsRecyclerViewAdapter(List<ChatFragment> mChatrooms) {
+    public ChatRoomsRecyclerViewAdapter(List<ChatDisplay> mChatrooms) {
         this.mChatrooms = mChatrooms;
     }
+
 
     @NonNull
     @Override
@@ -55,19 +61,18 @@ public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRooms
     public class ChatRoomViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public FragmentChatRoomCardBinding mBinding;
-        private ChatFragment mChatroom;
+        private ChatDisplay mRoom;
+
         public ChatRoomViewHolder(View view) {
             super(view);
             mView = view;
             mBinding = FragmentChatRoomCardBinding.bind(view);
         }
 
-        //this will be the function to send us to the chat rooms
-        void setChatRoomCard(final ChatFragment chat) {
-            mChatroom = chat;
-            String mSender = chat.getInfo()[1];
-            String mMessage = chat.getInfo()[0];
-            String result = mSender + ": " + mMessage;
+        //this will be the function to send us to the chat rooms        change this to display the chat card
+        void setChatRoomCard(final ChatDisplay chat) {
+            this.mRoom = chat;
+            String result = chat.getmLastSent();
             //this button will allow us to open that specific group chat
             mBinding.buttonChatRoom.setOnClickListener(view -> {
                 Navigation.findNavController(mView).navigate(
@@ -76,12 +81,7 @@ public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRooms
             });
             //title of the group chat
             mBinding.textChatMembers.setText("chat room");         //need to fix this to read out surface level information about the chat room
-            if(mSender.length() + mMessage.length() > 50){
-                int size = 48 - mSender.length();
-                result = mSender + ": " + mMessage.substring(0,size)+ "...";
-            }
             mBinding.textPreview.setText(result);
-//            mBinding.textChatMembers.setText("Group Chat");
         }
     }
 }

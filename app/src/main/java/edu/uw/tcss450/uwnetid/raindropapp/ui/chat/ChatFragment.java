@@ -138,9 +138,9 @@ public class ChatFragment extends Fragment {
                 binding.editMessage.setText(""));
     }
 
-    public String[] getInfo(){
-        String[] ret = {mChatModel.getRecentMessage().getMessage(),mChatModel.getRecentMessage().getSender()};
-        return ret;
-    }
+//    public String[] getInfo(){
+//        String[] ret = {mChatModel.getRecentMessage().getMessage(),mChatModel.getRecentMessage().getSender()};
+//        return ret;
+//    }
 
 }
