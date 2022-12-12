@@ -62,6 +62,12 @@ public class ChangePasswordViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Sends a post api call to the web service.
+     * @param email email of the account
+     * @param oldPassword entered current user password
+     * @param newPassword password to be changed o
+     */
     public void connect(final String email,
                         final String oldPassword,
                         final String newPassword) {
