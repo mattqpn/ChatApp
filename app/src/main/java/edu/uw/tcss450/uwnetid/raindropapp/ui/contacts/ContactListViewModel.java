@@ -31,6 +31,8 @@ import edu.uw.tcss450.uwnetid.raindropapp.R;
 
 public class ContactListViewModel extends AndroidViewModel {
     private MutableLiveData<List<Contact>> mContacts;
+    private static ArrayList contactsList = new ArrayList<>();
+    private static int tableSize = 0;
 
     public ContactListViewModel(@NonNull Application application) {
         super(application);
@@ -58,38 +60,34 @@ public class ContactListViewModel extends AndroidViewModel {
         IntFunction<String> getString =
                 getApplication().getResources()::getString;
         try {
-            JSONObject root = result;
-            if (root.has(getString.apply(R.string.keys_json_contact_response))) {
-                JSONObject response =
-                        root.getJSONObject(getString.apply(
-                                R.string.keys_json_contact_response));
-                if (response.has(getString.apply(R.string.keys_json_contact_data))) {
-                    JSONArray data = response.getJSONArray(
-                            getString.apply(R.string.keys_json_contact_data));
-
-                    for(int i = 0; i < data.length(); i++) {
-                        JSONObject jsonContact = data.getJSONObject(i);
-                        Contact contact = new Contact.Builder(
-                                jsonContact.getString(
-                                        getString.apply(
-                                                R.string.keys_json_contact_username)),
-                                jsonContact.getInt(getString.apply(
-                                                R.string.keys_json_contact_status)))
-                                .build();
-                        if (!mContacts.getValue().contains(contact)) {
-                            mContacts.getValue().add(contact);
-                        }
+            JSONArray contacts = result.getJSONArray("rows");
+            tableSize = contacts.length();
+            if (contactsList.size() != tableSize) {
+                for (int i = 0; i < contacts.length(); i++) {
+                    JSONObject jsonContact = contacts.getJSONObject(i);
+                    Contact contact = new Contact.Builder(
+                            jsonContact.getString(
+                                    getString.apply(
+                                            R.string.keys_json_contact_username)),
+                            jsonContact.getInt(getString.apply(
+                                    R.string.keys_json_contact_verified)))
+                            .build();
+                    if (!contactsList.contains(jsonContact.getString("username"))) {
+                        contactsList.add(jsonContact.getString("username"));
                     }
-                } else {
-                    Log.e("ERROR!", "No data array");
+                    if (!mContacts.getValue().contains(contact) && !mContacts.getValue().contains(contactsList)) {
+                        mContacts.getValue().add(contact);
+                    } else {
+                        // this shouldn't happen but could with the asynchronous
+                        // nature of the application
+                        Log.wtf("Chat message already received", "sorry :/");
+                    }
                 }
-            } else {
-                Log.e("ERROR!", "No response");
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e("ERROR!", e.getMessage());
+            Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
+            Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
         }
 
         mContacts.setValue(mContacts.getValue());
