@@ -19,18 +19,10 @@ import java.util.List;
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatMessageBinding;
 
-/**
- * RecyclerViewAdapter for the chats to be read
- */
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.MessageViewHolder> {
 
-    /**
-     * mMessages is the list of messages
-     * mEmail is the user's email
-     */
     private final List<ChatMessage> mMessages;
     private final String mEmail;
-
     public ChatRecyclerViewAdapter(List<ChatMessage> messages, String email) {
         this.mMessages = messages;
         mEmail = email;
@@ -87,8 +79,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                         ColorUtils.setAlphaComponent(
                             res.getColor(R.color.primaryLightColor, null),
                             16));
-                binding.textMessage.setTextColor(
-                        res.getColor(R.color.textColor, null));
 
                 card.setStrokeWidth(standard / 5);
                 card.setStrokeColor(ColorUtils.setAlphaComponent(
@@ -128,9 +118,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 card.setStrokeColor(ColorUtils.setAlphaComponent(
                         res.getColor(R.color.secondaryLightColor, null),
                         200));
-
-                binding.textMessage.setTextColor(
-                        res.getColor(R.color.secondaryTextColorFade, null));
 
                 //Round the corners on the right side
                 card.setShapeAppearanceModel(

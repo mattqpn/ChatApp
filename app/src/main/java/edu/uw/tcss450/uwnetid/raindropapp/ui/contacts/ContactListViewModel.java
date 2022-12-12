@@ -19,16 +19,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.IntFunction;
 
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 
 public class ContactListViewModel extends AndroidViewModel {
     private MutableLiveData<List<Contact>> mContacts;
+    private static ArrayList contactsList = new ArrayList<>();
+    private static int tableSize = 0;
 
     public ContactListViewModel(@NonNull Application application) {
         super(application);
@@ -42,53 +46,57 @@ public class ContactListViewModel extends AndroidViewModel {
     }
 
     private void handleError(final VolleyError error) {
-        //you should add much better error handling in a production release.
-        //i.e. YOUR PROJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
-        throw new IllegalStateException(error.getMessage());
+        if (Objects.isNull(error.networkResponse)) {
+            Log.e("NETWORK ERROR", error.getMessage());
+        } else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            Log.e("CLIENT ERROR",
+                    error.networkResponse.statusCode +
+                            " " +
+                            data);
+        }
     }
     private void handleResult(final JSONObject result) {
         IntFunction<String> getString =
                 getApplication().getResources()::getString;
         try {
-            JSONObject root = result;
-            if (root.has(getString.apply(R.string.keys_json_blogs_response))) {
-                JSONObject response =
-                        root.getJSONObject(getString.apply(
-                                R.string.keys_json_blogs_response));
-                if (response.has(getString.apply(R.string.keys_json_blogs_data))) {
-                    JSONArray data = response.getJSONArray(
-                            getString.apply(R.string.keys_json_blogs_data));
-
-                    for(int i = 0; i < data.length(); i++) {
-                        JSONObject jsonBlog = data.getJSONObject(i);
-                        Contact post = new Contact.Builder(
-                                jsonBlog.getString(
-                                        getString.apply(
-                                                R.string.keys_json_blogs_title)), 1)
-                                .build();
-                        if (!mContacts.getValue().contains(post)) {
-                            mContacts.getValue().add(post);
-                        }
+            JSONArray contacts = result.getJSONArray("rows");
+            tableSize = contacts.length();
+            if (contactsList.size() != tableSize) {
+                for (int i = 0; i < contacts.length(); i++) {
+                    JSONObject jsonContact = contacts.getJSONObject(i);
+                    Contact contact = new Contact.Builder(
+                            jsonContact.getString(
+                                    getString.apply(
+                                            R.string.keys_json_contact_username)),
+                            jsonContact.getInt(getString.apply(
+                                    R.string.keys_json_contact_verified)))
+                            .build();
+                    if (!contactsList.contains(jsonContact.getString("username"))) {
+                        contactsList.add(jsonContact.getString("username"));
                     }
-                } else {
-                    Log.e("ERROR!", "No data array");
+                    if (!mContacts.getValue().contains(contact) && !mContacts.getValue().contains(contactsList)) {
+                        mContacts.getValue().add(contact);
+                    } else {
+                        // this shouldn't happen but could with the asynchronous
+                        // nature of the application
+                        Log.wtf("Chat message already received", "sorry :/");
+                    }
                 }
-            } else {
-                Log.e("ERROR!", "No response");
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e("ERROR!", e.getMessage());
+            Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
+            Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
         }
 
         mContacts.setValue(mContacts.getValue());
     }
 
-    public void connectGet() {
-        String url =
-                "https://cfb3-tcss450-labs-2021sp.herokuapp.com/phish/blog/get";
+    public void connectGet(final String jwt) {
+        String url = getApplication().getResources().getString(R.string.base_url_service) +
+                "contacts";
+                //"https://cfb3-tcss450-labs-2021sp.herokuapp.com/phish/blog/get";
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -99,7 +107,8 @@ public class ContactListViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNmYjMxQGZha2UuZW1haWwuY29tIiwibWVtYmVyaWQiOjI4OCwiaWF0IjoxNjY2NTU3ODQ2LCJleHAiOjE2NzUxOTc4NDZ9.f7IVbAzJbX72vjRUbadIksMzNm6xkPi1l_R_C4O9zb4");
+                //headers.put("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNmYjMxQGZha2UuZW1haWwuY29tIiwibWVtYmVyaWQiOjI4OCwiaWF0IjoxNjY2NTU3ODQ2LCJleHAiOjE2NzUxOTc4NDZ9.f7IVbAzJbX72vjRUbadIksMzNm6xkPi1l_R_C4O9zb4");
+                headers.put("Authorization", jwt);
                 return headers;
             }
         };

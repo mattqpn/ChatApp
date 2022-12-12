@@ -55,7 +55,6 @@ public class ContactFragment extends Fragment {
                 });
             });
 
-
         } else {
             contactStatus = "Add Friend";
             binding.buttonContactStatus.setOnClickListener(button -> {
