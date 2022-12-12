@@ -9,6 +9,14 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/textColor"
+        android:textSize="40sp"
+        android:text="Weather" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +29,6 @@
             android:id="@+id/button_search_by_city"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
-            android:textColor="@color/white"
             android:text="Search by City"
             app:backgroundTint="@null" />
         <Button
@@ -30,7 +37,6 @@
             android:id="@+id/button_search_by_zipcode"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
-            android:textColor="@color/white"
             android:text="Search by Zipcode"
             app:backgroundTint="@null" />
         <Button
@@ -39,7 +45,6 @@
             android:id="@+id/button_search_by_location"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
-            android:textColor="@color/white"
             android:text="Search by Location"
             app:backgroundTint="@null" />
     </LinearLayout>

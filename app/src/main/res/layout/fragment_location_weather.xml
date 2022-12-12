@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.weather.WeatherFragment"
-    android:background="#00AFB9"
+    android:background="@color/backgroundColor"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:textSize="40sp"
         android:text="Search by GPS Location" />
 
@@ -28,7 +28,6 @@
             android:id="@+id/button_current_forecast"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
-            android:textColor="@color/white"
             android:text="Current Weather"
             app:backgroundTint="@null" />
         <Button
@@ -37,7 +36,6 @@
             android:id="@+id/button_hourly_forecast"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
-            android:textColor="@color/white"
             android:text="Hourly Forecast"
             app:backgroundTint="@null" />
         <Button
@@ -46,7 +44,6 @@
             android:id="@+id/button_five_day_forecast"
             android:layout_marginBottom="10dp"
             android:background="#14CC60"
-            android:textColor="@color/white"
             android:text="5 Day Forecast"
             app:backgroundTint="@null" />
         <ScrollView
