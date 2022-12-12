@@ -230,7 +230,6 @@ public class LocationWeatherFragment extends Fragment
                         jsonCoord = jsonResponse.getJSONObject("coord");
                         outLatitude = jsonCoord.getString("lat");
                         outLongitude = jsonCoord.getString("lon");
-                        mBinding.weatherResult.setTextColor(Color.rgb(0, 0, 0));
                         output += "Current Weather of " + outLatitude + ", " + outLongitude
                                 + "\nTemp: " + decimalFormat.format(temp) + " °F"
                                 + "\nFeels Like: " + decimalFormat.format(feelsLike) + " °F"
@@ -326,7 +325,6 @@ public class LocationWeatherFragment extends Fragment
                         jsonClouds = jsonWeather.getJSONObject("clouds");
                         clouds = jsonClouds.getString("all");
                         time = jsonWeather.getString("dt_txt");
-                        mBinding.weatherResult.setTextColor(Color.rgb(0, 0, 0));
                         output += "Current Weather on " + time
                                 + "\nTemp: " + decimalFormat.format(temp) + " °F"
                                 + "\nFeels Like: " + decimalFormat.format(feelsLike) + " °F"
@@ -427,7 +425,6 @@ public class LocationWeatherFragment extends Fragment
                         jsonClouds = jsonWeather.getJSONObject("clouds");
                         clouds = jsonClouds.getString("all");
                         time = jsonWeather.getString("dt_txt");
-                        mBinding.weatherResult.setTextColor(Color.rgb(0, 0, 0));
                         output += "Current Weather on " + time
                                 + "\nTemp: " + decimalFormat.format(temp) + " °F"
                                 + "\nFeels Like: " + decimalFormat.format(feelsLike) + " °F"
