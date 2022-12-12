@@ -30,7 +30,7 @@
             android:ems="10"
             android:hint="Enter Zipcode"
             android:inputType="textPersonName"
-            android:textColorHint="@android:color/black" />
+            android:textColorHint="@color/textColor" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:ems="10"
             android:hint="Enter Country (Optional)"
             android:inputType="textPersonName"
-            android:textColorHint="@android:color/black" />
+            android:textColorHint="@color/textColor" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp">
             <TextView
+                android:textColor="@color/textColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/weather_result" />
