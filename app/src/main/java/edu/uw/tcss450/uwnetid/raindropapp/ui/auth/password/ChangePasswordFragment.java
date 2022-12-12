@@ -143,7 +143,7 @@ public class ChangePasswordFragment extends Fragment {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             } else {
-                //navigateToLogin();
+                getFragmentManager().popBackStackImmediate();
             }
         } else {
             Log.d("JSON Response", "No Response");
