@@ -95,7 +95,7 @@ public class ChatViewModel extends AndroidViewModel {
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
-                this::handelSuccess,
+                this::handleSuccess,
                 this::handleError) {
 
             @Override
@@ -117,6 +117,29 @@ public class ChatViewModel extends AndroidViewModel {
 
         //code here will run
     }
+
+    public ChatMessage getRecentMessage() {
+        MutableLiveData<List<ChatMessage>> chatLiveLists;
+        List<ChatMessage> chatList;
+        ChatMessage message;
+        int count = 1;
+
+        for (Map.Entry<Integer, MutableLiveData<List<ChatMessage>>> it : mMessages.entrySet()) {
+
+            if (count == mMessages.size()) {
+                chatLiveLists = it.getValue();
+                chatList = chatLiveLists.getValue();
+                message = chatList.get(chatList.size()-1);
+                return message;
+            }
+            count++;
+        }
+
+        return null;
+
+    }
+
+
 
     /**
      * Makes a request to the web service to get the next batch of messages for a given Chat Room.
@@ -141,7 +164,7 @@ public class ChatViewModel extends AndroidViewModel {
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
-                this::handelSuccess,
+                this::handleSuccess,
                 this::handleError) {
 
             @Override
@@ -176,7 +199,7 @@ public class ChatViewModel extends AndroidViewModel {
         getOrCreateMapEntry(chatId).setValue(list);
     }
 
-    private void handelSuccess(final JSONObject response) {
+    private void handleSuccess(final JSONObject response) {
         List<ChatMessage> list;
         if (!response.has("chatId")) {
             throw new IllegalStateException("Unexpected response in ChatViewModel: " + response);
@@ -211,6 +234,10 @@ public class ChatViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Handles the error if cannot build a JSON object
+     * @param error object to handle object
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             Log.e("NETWORK ERROR", error.getMessage());

@@ -17,6 +17,7 @@
 
     <string name="action_search">Search</string>
     <string name="action_link">Full Post</string>
+    <string name="action_chat_room">Chat</string>
 
     <string name="title_home">Home</string>
     <string name="title_contacts">Contacts</string>
@@ -48,6 +49,9 @@
     <string name="keys_shared_prefs">My Auth App Shared Prefs</string>
     <string name="keys_prefs_jwt">Sharded Prefs JWT</string>
     <string name="action_log_out">Log Out</string>
+
+    <string name="text_chat_members">%1$s</string>
+    <string name="text_chat_preview">%1$s</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="text_blank">Blank text</string>

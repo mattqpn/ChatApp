@@ -8,15 +8,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatBinding;
 import edu.uw.tcss450.uwnetid.raindropapp.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment that holds the chat messages
  */
 public class ChatFragment extends Fragment {
 
@@ -39,6 +41,8 @@ public class ChatFragment extends Fragment {
         mChatModel = provider.get(ChatViewModel.class);
         mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
+
+
     }
 
     @Override
@@ -60,14 +64,12 @@ public class ChatFragment extends Fragment {
 
         final RecyclerView rv = binding.recyclerMessages;
         //Set the Adapter to hold a reference to the list FOR THIS chat ID that the ViewModel
-        //holds.
+//        holds.
         rv.setAdapter(new ChatRecyclerViewAdapter(
                         mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID),
                         mUserModel.getEmail()));
 
 
-        //When the user scrolls to the top of the RV, the swiper list will "refresh"
-        //The user is out of messages, go out to the service and get more
         binding.swipeContainer.setOnRefreshListener(() -> {
             mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         });
@@ -86,7 +88,7 @@ public class ChatFragment extends Fragment {
                     binding.swipeContainer.setRefreshing(false);
                 });
 
-        //Send button was clicked. Send the message via the SendViewModel
+
         binding.buttonSend.setOnClickListener(button -> {
             mSendModel.sendMessage(HARD_CODED_CHAT_ID,
                     mUserModel.getmJwt(),
@@ -97,4 +99,5 @@ public class ChatFragment extends Fragment {
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));
     }
+
 }

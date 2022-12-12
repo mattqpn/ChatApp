@@ -25,8 +25,14 @@ import java.util.Objects;
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.io.RequestQueueSingleton;
 
+/**
+ * ViewModel for sending a message
+ */
 public class ChatSendViewModel extends AndroidViewModel {
 
+    /**
+     * List of JSON Object of messages
+     */
     private final MutableLiveData<JSONObject> mResponse;
 
     public ChatSendViewModel(@NonNull Application application) {
@@ -41,6 +47,12 @@ public class ChatSendViewModel extends AndroidViewModel {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * Sends a message to the database
+     * @param chatId is the id for the chat in the database
+     * @param jwt is the JSON web token of the user
+     * @param message is the message that is wanted to be sent
+     */
     public void sendMessage(final int chatId, final String jwt, final String message) {
         String url = getApplication().getResources().getString(R.string.base_url_service) +
                 "messages";
@@ -63,7 +75,6 @@ public class ChatSendViewModel extends AndroidViewModel {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
                 headers.put("Authorization", jwt);
                 return headers;
             }
@@ -79,7 +90,10 @@ public class ChatSendViewModel extends AndroidViewModel {
     }
 
 
-
+    /**
+     * Handles the error if cannot build a JSON object
+     * @param error object to handle object
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             Log.e("NETWORK ERROR", error.getMessage());
