@@ -24,6 +24,7 @@ Finally the registration/login performance, a user is able to register a new acc
 
 There are currently two guest for users to try out if they hope to try out the app without signing up and
 the credentials include the following.
+
 	Test1
 		Email: test1@test.com
 		Password: test12345
