@@ -31,7 +31,10 @@ import org.json.JSONObject;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentCityWeatherBinding;
 
 /**
- *
+ * This Fragment is for obtaining the Weather information using a user entered
+ * zipcode in the TextView. It gets the zipcode from a user entered EditText
+ * field and uses that to make GET https requests for current weather,
+ * hourly forecast, and 5-day forecasts.
  */
 public class CityWeatherFragment extends Fragment
 {
@@ -53,8 +56,8 @@ public class CityWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param savedInstanceState
+     * Standard implementation of onCreate() for this Fragment.
+     * @param savedInstanceState Parameter for savedInstanceState using Bundle.
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -63,11 +66,11 @@ public class CityWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * Standard implementation of onCreateView() for this Fragment.
+     * @param inflater Parameter for the LayoutInflater.
+     * @param container Parameter for the container from ViewGroup.
+     * @param savedInstanceState Parameter for the savedInstanceState using Bundle.
+     * @return Returns the root for mBinding.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,9 +83,11 @@ public class CityWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param view
-     * @param savedInstanceState
+     * Implementing onViewCreated() to initialize the buttons that
+     * the user will be able to use to pick what type of Weather they would
+     * like to see: current, hourly, or 5-day.
+     * @param view Parameter for the View.
+     * @param savedInstanceState Parameter for the savedInstanceState using Bundle.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
@@ -95,8 +100,9 @@ public class CityWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param view
+     * This method getCurrentWeather() gets the current Weather using a
+     * GET https request to obtain the current Weather information.
+     * @param view Parameter for the View.
      */
     public void getCurrentWeather(final View view)
     {
@@ -195,8 +201,9 @@ public class CityWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param view
+     * This method getHourlyWeather() gets the hourly forecast using a
+     * GET https request to obtain the hourly Weather information.
+     * @param view Parameter for the View.
      */
     public void getHourlyWeather(final View view)
     {
@@ -295,8 +302,14 @@ public class CityWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param view
+     * This method getHourlyWeather() gets the five day forecast using a
+     * GET https request to obtain the hourly Weather information. Yes it
+     * is actually the hourly Weather information as the API being used does
+     * not have options for daily forecasts that are not free. The JWT I can
+     * obtain has the Weather information in an array that is every 3 hours,
+     * up to 5 days. GET request is made using the zipcode in this
+     * case.
+     * @param view Parameter for the View.
      */
     public void getFiveDayWeather(final View view)
     {

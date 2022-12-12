@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.icu.text.DecimalFormat;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -33,12 +34,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentLocationWeatherBinding;
 
 /**
- *
+ * This Fragment is for obtaining the Weather information using the current
+ * location of the device. It gets the latitude and longitude from the GPS
+ * location and uses that to make GET https requests for current weather,
+ * hourly forecast, and 5-day forecasts.
  */
 public class LocationWeatherFragment extends Fragment
 {
@@ -55,6 +57,7 @@ public class LocationWeatherFragment extends Fragment
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     private LocationManager mLocationManager;
+    private Criteria criteria;
     private Location mLocation;
     private String mLatitude = "";
     private String mLongitude = "";
@@ -65,19 +68,28 @@ public class LocationWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param savedInstanceState
+     * In this Fragment's onCreate() a bit of Location logic is implemented
+     * in order to get the GPS location and fetch the latitude and longitude.
+     * It retrieves the last known location and checks if it is null. If it is not
+     * it uses that location to get a latitude and longitude from, if it is null,
+     * the latitude and longitude are set to UW Tacoma's location by default.
+     * @param savedInstanceState Parameter for the savedInstanceState using Bundle.
      */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        mLocationManager = (LocationManager)this.getActivity()
-                .getSystemService(Context.LOCATION_SERVICE);
+        double latitude = 0;
+        double longitude = 0;
 
-        if (ActivityCompat.checkSelfPermission(this.getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
+        mLocationManager = (LocationManager) this.requireActivity()
+                .getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        String bestProvider = String.valueOf(mLocationManager
+                .getBestProvider(criteria, true)).toString();
+
+        if (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this.getActivity(),
                 Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -92,9 +104,27 @@ public class LocationWeatherFragment extends Fragment
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        double latitude = mLocation.getLatitude();
-        double longitude = mLocation.getLongitude();
+        Location location = mLocationManager.getLastKnownLocation(bestProvider);
+
+        if (location != null)
+        {
+            Log.e("TAG", "GPS is on");
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+        else
+        {
+            /*
+             * Below code would work but currently it does not as a temporary work
+             * around it just sets latitude and longitude to UW Tacoma by default.
+             * As a side note, the emulator is weird and google maps may have to
+             * be opened first in order for it to save a Last Known Location for
+             * the above code to access.
+             */
+            //mLocationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
+            latitude = 47.2454;
+            longitude = -122.4385;
+        }
 
         mLatitude += latitude;
         mLongitude += longitude;
@@ -104,11 +134,11 @@ public class LocationWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * Standard implementation for the onCreateView() method.
+     * @param inflater Parameter for the LayoutInflater.
+     * @param container Parameter for the container.
+     * @param savedInstanceState Parameter for the savedInstanceState using Bundle.
+     * @return Returns the root for mBinding.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,9 +152,11 @@ public class LocationWeatherFragment extends Fragment
 
 
     /**
-     *
-     * @param view
-     * @param savedInstanceState
+     * Implementing onViewCreated() to initialize the buttons that
+     * the user will be able to use to pick what type of Weather they would
+     * like to see: current, hourly, or 5-day.
+     * @param view Parameter for the View.
+     * @param savedInstanceState Parameter for the savedInstanceState from Bundle.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
@@ -137,14 +169,15 @@ public class LocationWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param view
+     * This method getCurrentWeather() gets the current Weather using a
+     * GET https request to obtain the current Weather information.
+     * @param view Parameter for the View.
      */
     public void getCurrentWeather(final View view)
     {
         String tempURL = "";
-        String latitude = "47.2454";
-        String longitude = "-122.4385";
+        String latitude = mLatitude;
+        String longitude = mLongitude;
 
         if (latitude.equals(""))
         {
@@ -216,7 +249,7 @@ public class LocationWeatherFragment extends Fragment
             }, new Response.ErrorListener()
             {
                 @Override
-                public void onErrorResponse(VolleyError error)
+                public void onErrorResponse(VolleyError error) //Error handling for Volley
                 {
                     Toast.makeText(getActivity(), error.toString(),
                             Toast.LENGTH_SHORT).show();
@@ -229,14 +262,15 @@ public class LocationWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param view
+     * This method getHourlyWeather() gets the hourly forecast using a
+     * GET https request to obtain the hourly Weather information.
+     * @param view Parameter for the View.
      */
     public void getHourlyWeather(final View view)
     {
         String tempURL = "";
-        String latitude = "47.2454";
-        String longitude = "-122.4385";
+        String latitude = mLatitude;
+        String longitude = mLongitude;
 
         if (latitude.equals(""))
         {
@@ -324,14 +358,20 @@ public class LocationWeatherFragment extends Fragment
     }
 
     /**
-     *
-     * @param view
+     * This method getHourlyWeather() gets the five day forecast using a
+     * GET https request to obtain the hourly Weather information. Yes it
+     * is actually the hourly Weather information as the API being used does
+     * not have options for daily forecasts that are not free. The JWT I can
+     * obtain has the Weather information in an array that is every 3 hours,
+     * up to 5 days. GET request is made using latitude and longitude in this
+     * case.
+     * @param view Parameter for the View.
      */
     public void getFiveDayWeather(final View view)
     {
         String tempURL = "";
-        String latitude = "47.2454";
-        String longitude = "-122.4385";
+        String latitude = mLatitude;
+        String longitude = mLongitude;
 
         if (latitude.equals(""))
         {

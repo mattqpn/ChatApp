@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -20,7 +19,12 @@ import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentWeatherBinding;
 
 /**
- *
+ * This Fragment is for the core of the Weather fragment. It contains buttons
+ * that the user can use to choose how they would like to obtain Weather
+ * information. The buttons are as the follows:
+ * Search by City, Search by Zipcode, and Search by Location.
+ * Search by Location is the only different searching method as it actually
+ * uses the user's GPS location to obtain the Weather information.
  */
 public class WeatherFragment extends Fragment
 {
@@ -37,22 +41,21 @@ public class WeatherFragment extends Fragment
     }
 
     /**
-     * @param savedInstanceState
+     * Standard implementation of onCreate() for this Fragment.
+     * @param savedInstanceState Parameter for the savedInstanceState using Bundle.
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        currentCity = getActivity().findViewById(R.id.current_city);
-        currentCountry = getActivity().findViewById(R.id.current_country);
-        weatherResult = getActivity().findViewById(R.id.weather_result);
     }
 
     /**
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * Standard implementation of onCreateView() for this Fragment.
+     * @param inflater Parameter for the LayoutInflater.
+     * @param container Parameter for the container from ViewGroup.
+     * @param savedInstanceState Parameter for savedInstanceState using Bundle.
+     * @return Returns the root for mBinding.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,8 +68,11 @@ public class WeatherFragment extends Fragment
     }
 
     /**
-     * @param view
-     * @param savedInstanceState
+     * Implementing onViewCreated() to initialize the buttons that
+     * the user will be able to use to pick how they want to search
+     * for the Weather.
+     * @param view Parameter for the View.
+     * @param savedInstanceState Parameter for savedInstanceState using Bundle.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
@@ -79,7 +85,9 @@ public class WeatherFragment extends Fragment
     }
 
     /**
-     * @param view
+     * This method uses the nav graph to move the window to the Search by City
+     * fragment.
+     * @param view Parameter for the View.
      */
     public void goToCityWeather(final View view)
     {
@@ -87,12 +95,22 @@ public class WeatherFragment extends Fragment
                 .navigate(R.id.action_navigation_weather_to_cityWeatherFragment);
     }
 
+    /**
+     * This method uses the nav graph to move the window to the Search by Zipcode
+     * fragment.
+     * @param view Parameter for the View.
+     */
     public void goToZipcodeWeather(final View view)
     {
         Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment)
                 .navigate(R.id.action_navigation_weather_to_zipcodeWeatherFragment);
     }
 
+    /**
+     * This method uses the nav graph to move the window to the Search by Location
+     * fragment.
+     * @param view Parameter for the View.
+     */
     public void goToLocationWeather(final View view)
     {
         Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment)
