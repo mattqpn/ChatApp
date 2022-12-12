@@ -16,7 +16,7 @@ import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatRoomsListBindi
 import edu.uw.tcss450.uwnetid.raindropapp.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment that holds the chat rooms
  */
 public class ChatRoomsFragment extends Fragment {
     private ChatRoomsViewModel mChatRoomsModel;

@@ -15,20 +15,12 @@ import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatRoomCardBinding;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
+ * RecyclerViewAdapter for the chatsrooms to be entered
  */
 public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomsRecyclerViewAdapter.ChatRoomViewHolder> {
 
 
-//    //Store all of the blogs to present
-//    private final List<ChatFragment> mChatrooms;
     private final List<ChatDisplay> mChatrooms;
-
-//    public ChatRoomsRecyclerViewAdapter(List<ChatFragment> mChatrooms) {
-//        this.mChatrooms = mChatrooms;
-//    }
 
     public ChatRoomsRecyclerViewAdapter(List<ChatDisplay> mChatrooms) {
         this.mChatrooms = mChatrooms;
@@ -69,7 +61,7 @@ public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRooms
             mBinding = FragmentChatRoomCardBinding.bind(view);
         }
 
-        //this will be the function to send us to the chat rooms        change this to display the chat card
+        //this will be the function to send us to the chat rooms
         void setChatRoomCard(final ChatDisplay chat) {
             this.mRoom = chat;
             String result = chat.getmLastSent();
@@ -80,7 +72,7 @@ public class ChatRoomsRecyclerViewAdapter extends RecyclerView.Adapter<ChatRooms
                                 .actionNavigationChatroomListToNavigationChat());
             });
             //title of the group chat
-            mBinding.textChatMembers.setText(chat.getmChatRoomName());         //need to fix this to read out surface level information about the chat room
+            mBinding.textChatMembers.setText(chat.getmChatRoomName());
             mBinding.textPreview.setText(result);
         }
     }

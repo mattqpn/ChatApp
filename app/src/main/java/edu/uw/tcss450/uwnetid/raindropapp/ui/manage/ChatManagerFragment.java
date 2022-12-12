@@ -1,4 +1,4 @@
-package edu.uw.tcss450.uwnetid.raindropapp.ui.chat;
+package edu.uw.tcss450.uwnetid.raindropapp.ui.manage;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,6 +15,11 @@ import android.view.ViewGroup;
 import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.model.UserInfoViewModel;
 
+/**
+ * Fragment that is set to be buttons
+ * that will hold the ChatManageViewModel
+ * and the actions
+ */
 public class ChatManagerFragment extends Fragment {
 
     private ChatManagerViewModel mViewModel;

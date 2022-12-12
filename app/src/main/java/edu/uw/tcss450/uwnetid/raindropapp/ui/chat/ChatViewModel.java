@@ -234,6 +234,10 @@ public class ChatViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Handles the error if cannot build a JSON object
+     * @param error object to handle object
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             Log.e("NETWORK ERROR", error.getMessage());

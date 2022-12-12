@@ -32,12 +32,15 @@ import edu.uw.tcss450.uwnetid.raindropapp.R;
 import edu.uw.tcss450.uwnetid.raindropapp.ui.list.ChatDisplay;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
+ * ViewModel class of the the possible chat rooms
+ * the user can enter
  */
 public class ChatRoomsViewModel extends AndroidViewModel {
 
+    /**
+     * mChatRoomList holds the list of chat cards to be displayed
+     * of what chatroom are available for the user
+     */
     private MutableLiveData<List<ChatDisplay>> mChatRoomList;
 
     public ChatRoomsViewModel(@NonNull Application application) {
@@ -52,12 +55,14 @@ public class ChatRoomsViewModel extends AndroidViewModel {
         mChatRoomList.observe(owner, observer);
     }
 
+    /**
+     * Connects to web server to grab possible chat rooms
+     * @param jwt is the JSON web token of the user
+     */
     public void connectGet(String jwt) {
-//        mJwt = jwt;
-
         String url =
                 getApplication().getResources().getString(R.string.base_url_service) +
-                        "chats";       //need to figure out the sql table and what is in it
+                        "chats";
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -83,7 +88,10 @@ public class ChatRoomsViewModel extends AndroidViewModel {
                 .add(request);
     }
 
-
+    /**
+     * Handles the error if cannot build a JSON object
+     * @param error object to handle object
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             Log.e("NETWORK ERROR", error.getMessage());
@@ -97,18 +105,23 @@ public class ChatRoomsViewModel extends AndroidViewModel {
         }
     }
 
-
+    /**
+     * Handles the result by creating chat cards and adding to mChatRoomList
+     * @param result JSON object if a successful connection
+     */
     private void handleResult(final JSONObject result) {
         List<ChatDisplay> list = getChatRoomList();
         try {
-//            Log.i("Made it to try statement", "Made it to try statement");
             JSONArray chatRooms = result.getJSONArray("rows");
             Log.e("Made it in Handle Result ChatRoomsViewModel", result.toString());
 
             for(int i=0; i < chatRooms.length(); i++){
 
                 JSONObject mRoom = chatRooms.getJSONObject(i);
-                ChatDisplay chatDisplay = new ChatDisplay(mRoom.getString("chatid"), "New Message...", "Sent From");
+//                ChatDisplay chatDisplay = new ChatDisplay(mRoom.getString("chatid"), "New Message...", "Sent From");        //original display
+                ChatDisplay chatDisplay = new ChatDisplay(mRoom.getString("name"), "New Message...", "Sent From");        //current display on the chat card
+
+//                ChatDisplay chatDisplay = new ChatDisplay(mRoom.getString("name"), "New Message...", mRoom.getString("username"));        //modify to display on the chat card to get the sender
                 if(list.size()<chatRooms.length()){
                     list.add(0, chatDisplay);
                 }
@@ -122,6 +135,10 @@ public class ChatRoomsViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Gets the list of all chatrooms for the user
+     * @return list of all possible chat rooms
+     */
     public List<ChatDisplay> getChatRoomList(){
         return mChatRoomList.getValue();
     }

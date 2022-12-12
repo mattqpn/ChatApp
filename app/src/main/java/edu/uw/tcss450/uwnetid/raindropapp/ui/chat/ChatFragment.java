@@ -18,7 +18,7 @@ import edu.uw.tcss450.uwnetid.raindropapp.databinding.FragmentChatBinding;
 import edu.uw.tcss450.uwnetid.raindropapp.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment that holds the chat messages
  */
 public class ChatFragment extends Fragment {
 
@@ -28,10 +28,6 @@ public class ChatFragment extends Fragment {
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
     private ChatSendViewModel mSendModel;
-
-//    private int mChatID;
-//    private ChatFragmentArgs mArgs;
-
 
     public ChatFragment() {
         // Required empty public constructor
@@ -46,8 +42,6 @@ public class ChatFragment extends Fragment {
         mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
 
-//        mArgs = ChatFragmentArgs.fromBundle(getArguments());
-//        mChatID = mArgs.getChatRoom().getChatId();
 
     }
 

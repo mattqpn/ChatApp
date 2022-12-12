@@ -8,11 +8,15 @@ import androidx.fragment.app.Fragment;
 import java.io.Serializable;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Chat card class of how chat rooms will be displayed in recycler view
  */
 public class ChatDisplay implements Serializable {
 
+    /**
+     * mChatRoomName is the name of the chatroom
+     * mMessage is the last sent message
+     * mSender is the last sender
+     */
     private String mChatRoomName;
     private String mMessage;
     private String mSender;
@@ -27,21 +31,34 @@ public class ChatDisplay implements Serializable {
         this.mSender = mSender;
     }
 
+    /**
+     * Gets the chatroom name
+     * @return the chatroom name
+     */
     public String getmChatRoomName(){
         return mChatRoomName;
     }
 
+    /**
+     * Gets the last message sent
+     * @return the last message sent
+     */
     public String getmLastSent(){
-        String temp = mSender + ": " + mMessage;
+        String temp = mMessage;
         if(temp.length() > 50){
             temp = temp.substring(0,45) + "...";
         }
         return temp;
     }
 
+    /**
+     * Get the user of the last message
+     * @return the user of the last message
+     */
     public String getUser(){
         return mSender;
     }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         return super.equals(obj);
