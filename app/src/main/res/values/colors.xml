@@ -28,4 +28,5 @@
     <color name="colorAccent">@color/secondaryColor</color>
     <color name="grey">#88888888</color>
     <color name="red">#ff3333</color>
+    <color name="colorPrimaryAlpha">#226200EE</color>
 </resources>
