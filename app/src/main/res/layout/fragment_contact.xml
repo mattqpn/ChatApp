@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_inner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.contacts.ContactFragment">
+
+    <ImageView
+        android:id="@+id/image_contact_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.131"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/text_username"
+        android:layout_width="256dp"
+        android:layout_height="44dp"
+        android:text="@string/text_username"
+        android:textAlignment="center"
+        android:textSize="8pt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_contact_photo"
+        app:layout_constraintVertical_bias="0.036" />
+
+    <ImageButton
+        android:id="@+id/dialog_button"
+        android:layout_width="259dp"
+        android:layout_height="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_username"
+        app:layout_constraintVertical_bias="0.046"
+        app:srcCompat="@drawable/ic_chat_black_24dp" />
+
+    <Button
+        android:id="@+id/button_remove_contact"
+        android:layout_width="258dp"
+        android:layout_height="53dp"
+        android:backgroundTint="@color/red"
+        android:textColor="@color/white"
+        android:text="Remove Contact"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_contact_status"
+        app:layout_constraintVertical_bias="0.061" />
+
+    <Button
+        android:id="@+id/button_contact_status"
+        android:layout_width="256dp"
+        android:layout_height="53dp"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/white"
+        android:text="@string/text_contact_status"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_button"
+        app:layout_constraintVertical_bias="0.056" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

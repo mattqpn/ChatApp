@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="keys_json_contact_rowCount">0</integer>
+    <string name="keys_json_contact_rows">rows</string>
+    <string name="keys_json_contact_username">username</string>
+    <string name="keys_json_contact_verified">verified</string>
+</resources>
