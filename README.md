@@ -20,16 +20,9 @@ the credentials include the following.
 		Email: test2@test.com
 		Password: test12345
 
-For any further questions feel free to reach out to any of the following emails.
-Elijah Reyes: elibreyes@gmail.com
-
 Google drive meeting notes:
 https://drive.google.com/drive/folders/1AMUpROnKqJwxlZrll0TVeKfNOo46Grvp?usp=sharing
 
-Android Github repository:
-https://github.com/CKojiro/Team_6_TCSS_450
-
-Server-side Github repository:
-https://github.com/cfb3/Team_6_TCSS_450_Web_Service
+Orignal Android Github repository and Server-side Github repository removed to hide class assignment
 
 
